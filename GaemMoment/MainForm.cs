@@ -1,0 +1,63 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace GaemMoment
+{
+    public partial class MainForm : Form
+    {
+        protected readonly ReadOnlyDictionary<Tab, TabChangingControl> Tabs;
+
+        protected TabChangingControl CurrentlySelectedTab;
+        public MainForm()
+        {
+            InitializeComponent();
+            Tabs = new ReadOnlyDictionary<Tab, TabChangingControl>(new Dictionary<Tab, TabChangingControl>
+            {
+                { Tab.MAIN_MENU, mainMenu },
+                { Tab.ROOM_SELECTOR, roomList },
+                { Tab.GAME, gameTab }
+            });
+
+            foreach (TabChangingControl tab in Tabs.Values)
+            {
+                tab.TabChange += new System.EventHandler(ChangeTab);
+                DisableTab(tab);
+            }
+            EnableTab(mainMenu);
+            CurrentlySelectedTab = mainMenu;
+        }
+
+        protected void ChangeTab(object sender, EventArgs e)
+        {
+            TabSelectEventArgs args = (TabSelectEventArgs)e;
+
+            if (args.RoomCode != null) 
+            {
+                gameTab.UpdateCode(args.RoomCode);
+            }
+            DisableTab(CurrentlySelectedTab);
+            EnableTab(Tabs[args.SelectedTab]);
+            CurrentlySelectedTab = Tabs[args.SelectedTab];
+        }
+
+        protected void EnableTab(TabChangingControl tab)
+        {
+            tab.Enabled = true;
+            tab.Visible = true;
+        }
+
+        protected void DisableTab(TabChangingControl tab)
+        {
+            tab.Enabled = false;
+            tab.Visible = false;
+        }
+    }
+}

@@ -156,7 +156,7 @@ namespace GaemMoment
                     {
                         MessageBox.Show($"Logged in successfully, hello {parts[2]}");
 
-                        GameForm nameForm = new GameForm();
+                        MainForm nameForm = new MainForm();
                         form.Invoke((MethodInvoker)delegate
                         {
                             nameForm.Show();

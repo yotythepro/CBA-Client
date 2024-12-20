@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.Prompt = new System.Windows.Forms.Label();
-            this.textBox = new System.Windows.Forms.TextBox();
+            this.TextBox = new System.Windows.Forms.TextBox();
             this.OKButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -42,12 +42,12 @@
             this.Prompt.TabIndex = 0;
             this.Prompt.Text = "Enter Text:";
             // 
-            // textBox
+            // TextBox
             // 
-            this.textBox.Location = new System.Drawing.Point(12, 49);
-            this.textBox.Name = "textBox";
-            this.textBox.Size = new System.Drawing.Size(151, 20);
-            this.textBox.TabIndex = 1;
+            this.TextBox.Location = new System.Drawing.Point(12, 49);
+            this.TextBox.Name = "TextBox";
+            this.TextBox.Size = new System.Drawing.Size(151, 20);
+            this.TextBox.TabIndex = 1;
             // 
             // OKButton
             // 
@@ -65,7 +65,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(198, 109);
             this.Controls.Add(this.OKButton);
-            this.Controls.Add(this.textBox);
+            this.Controls.Add(this.TextBox);
             this.Controls.Add(this.Prompt);
             this.Name = "InputBox";
             this.Text = "InputBox";
@@ -77,7 +77,7 @@
         #endregion
 
         private System.Windows.Forms.Label Prompt;
-        private System.Windows.Forms.TextBox textBox;
         private System.Windows.Forms.Button OKButton;
+        public System.Windows.Forms.TextBox TextBox;
     }
 }

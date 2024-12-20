@@ -46,6 +46,7 @@
             this.RoomSelectionList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.RoomCreatorUsername,
             this.RoomName});
+            this.RoomSelectionList.FullRowSelect = true;
             this.RoomSelectionList.HideSelection = false;
             this.RoomSelectionList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1});
@@ -96,6 +97,7 @@
             this.JoinRoomButton.TabIndex = 3;
             this.JoinRoomButton.Text = "Join Room";
             this.JoinRoomButton.UseVisualStyleBackColor = true;
+            this.JoinRoomButton.Click += new System.EventHandler(this.JoinRoomButton_Click);
             // 
             // JoinPrivateRoomButton
             // 
@@ -106,6 +108,7 @@
             this.JoinPrivateRoomButton.TabIndex = 4;
             this.JoinPrivateRoomButton.Text = "Find Private Room";
             this.JoinPrivateRoomButton.UseVisualStyleBackColor = true;
+            this.JoinPrivateRoomButton.Click += new System.EventHandler(this.JoinPrivateRoomButton_Click);
             // 
             // RefreshListButton
             // 

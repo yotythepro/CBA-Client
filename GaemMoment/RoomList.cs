@@ -24,17 +24,31 @@ namespace GaemMoment
 
         private void CreateRoomButton_Click(object sender, EventArgs e)
         {
-            Microsoft.VisualBasic.
             ChangeTab(Tab.GAME, "N3WR00M");
         }
 
         private void RefreshListButton_Click(object sender, EventArgs e)
         {
             RoomHandler.UpdateRooms();
-            RoomSelectionList.Clear();
+            RoomSelectionList.Items.Clear();
             foreach (Room room in RoomHandler.Rooms)
             {
                 RoomSelectionList.Items.Add(new ListViewItem(new string[] { room.CreatorUserName, room.Name }));
+            }
+        }
+
+        private void JoinRoomButton_Click(object sender, EventArgs e)
+        {
+            ChangeTab(Tab.GAME, RoomHandler.Rooms[RoomSelectionList.SelectedIndices[0]].RoomCode);
+        }
+
+        private void JoinPrivateRoomButton_Click(object sender, EventArgs e)
+        {
+            InputBox inputBox = new InputBox("Enter Room ID:");
+
+            if (inputBox.ShowDialog() == DialogResult.OK)
+            {
+                ChangeTab(Tab.GAME, inputBox.TextBox.Text);
             }
         }
     }

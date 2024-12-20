@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GaemMoment
 {
-    internal class TabSelectEventArgs : EventArgs
+    public class TabSelectEventArgs : EventArgs
     {
         public Tab SelectedTab;
         public string RoomCode;

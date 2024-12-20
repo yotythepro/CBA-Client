@@ -22,7 +22,7 @@ namespace GaemMomentServer
         /// </summary>
         public DBConn()
         {
-            connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\yotam\Downloads\GaemMoment-20240321T155318Z-001\GaemMoment\GaemMomentServer\GaemMomentServer\Database1.mdf;Integrated Security=True";
+            connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=""C:\Users\alonc\Downloads\GaemMoment New\GaemMoment\GaemMomentServer\GaemMomentServer\Database1.mdf"";Integrated Security=True";
             connection = new SqlConnection(connectionString);
             command = new SqlCommand();
         }

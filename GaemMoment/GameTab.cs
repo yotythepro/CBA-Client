@@ -10,12 +10,16 @@ using System.Windows.Forms;
 
 namespace GaemMoment
 {
-    public partial class InputBox : Form
+    public partial class GameTab : TabChangingControl
     {
-        public InputBox(string prompt)
+        public GameTab()
         {
             InitializeComponent();
-            Prompt.Text = prompt;
+        }
+
+        public void UpdateCode(string code)
+        {
+            label1.Text = $"Room code: {code}";
         }
     }
 }
