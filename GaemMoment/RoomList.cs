@@ -15,6 +15,7 @@ namespace GaemMoment
         public RoomList()
         {
             InitializeComponent();
+            UpdateList();
         }
 
         private void BackButton_Click(object sender, EventArgs e)
@@ -29,12 +30,7 @@ namespace GaemMoment
 
         private void RefreshListButton_Click(object sender, EventArgs e)
         {
-            RoomHandler.UpdateRooms();
-            RoomSelectionList.Items.Clear();
-            foreach (Room room in RoomHandler.Rooms)
-            {
-                RoomSelectionList.Items.Add(new ListViewItem(new string[] { room.CreatorUserName, room.Name }));
-            }
+            UpdateList();
         }
 
         private void JoinRoomButton_Click(object sender, EventArgs e)
@@ -49,6 +45,16 @@ namespace GaemMoment
             if (inputBox.ShowDialog() == DialogResult.OK)
             {
                 ChangeTab(Tab.GAME, inputBox.TextBox.Text);
+            }
+        }
+
+        private void UpdateList()
+        {
+            RoomHandler.UpdateRooms();
+            RoomSelectionList.Items.Clear();
+            foreach (Room room in RoomHandler.Rooms)
+            {
+                RoomSelectionList.Items.Add(new ListViewItem(new string[] { room.CreatorUserName, room.Name }));
             }
         }
     }

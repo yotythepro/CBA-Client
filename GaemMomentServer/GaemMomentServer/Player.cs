@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,6 +29,14 @@ namespace GaemMomentServer
         public bool facingRight;
         public bool isAlive = true;
         private double timeSinceAttack = 0;
+        public string Name;
+        public TcpClient Client;
+
+        public Player(string name, TcpClient client)
+        {
+            Name = name;
+            Client = client;
+        }
 
         /// <summary>
         /// Creates a new instance of player using (<paramref name="xPos"/>, <paramref name="yPos"/>) as its position.
