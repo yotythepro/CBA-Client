@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
+using System.Text.Json;
 
 namespace GaemMomentServer {
     /// <summary>
@@ -110,6 +111,11 @@ namespace GaemMomentServer {
                     case 'D':
                         DBConn conn = new DBConn();
                         SendMessage(conn.ParseMessage(messageReceived.Substring(1)), cl);
+                        break;
+                    case '{':
+                        Request request = JsonSerializer.Deserialize<Request>(messageReceived);
+                        Response response = request.Handle(players[cl]);
+                        SendMessage(JsonSerializer.Serialize(response), cl);
                         break;
 
                 }

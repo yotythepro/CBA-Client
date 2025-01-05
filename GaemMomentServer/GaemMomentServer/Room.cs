@@ -8,7 +8,7 @@ namespace GaemMomentServer
 {
     internal class Room
     {
-        const int MAX_PLAYER_COUNT = 2
+        const int MAX_PLAYER_COUNT = 2;
 
         public string Name { get; }
         public string RoomCode { get; }
@@ -27,14 +27,17 @@ namespace GaemMomentServer
             {
                 Creator
             };
+            RoomHandler.Rooms.Add(this);
         }
 
-        public void AddPlayer(Player player)
+        public bool AddPlayer(Player player)
         {
             if (!IsFull)
             {
                 PlayerList.Add(player);
+                return true;
             }
+            return false;
         }
     }
 }
