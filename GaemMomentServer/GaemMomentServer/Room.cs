@@ -35,9 +35,18 @@ namespace GaemMomentServer
             if (!IsFull)
             {
                 PlayerList.Add(player);
+                player.IsInRoom = true;
                 return true;
             }
             return false;
+        }
+
+        public void Close()
+        {
+            foreach (Player player in PlayerList)
+            {
+                player.IsInRoom = false;
+            }
         }
     }
 }

@@ -31,6 +31,7 @@ namespace GaemMomentServer
         private double timeSinceAttack = 0;
         public string Name;
         public TcpClient Client;
+        public bool IsInRoom = false;
 
         public Player(string name, TcpClient client)
         {
