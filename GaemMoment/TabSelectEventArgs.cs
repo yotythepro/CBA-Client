@@ -9,16 +9,16 @@ namespace GaemMoment
     public class TabSelectEventArgs : EventArgs
     {
         public Tab SelectedTab;
-        public string RoomCode;
+        public Room SelectedRoom;
 
         public TabSelectEventArgs(Tab selectedTab)
         {
             SelectedTab = selectedTab;
         }
 
-        public TabSelectEventArgs(Tab selectedTab, string roomCode) : this(selectedTab)
+        public TabSelectEventArgs(Tab selectedTab, Room room) : this(selectedTab)
         {
-            RoomCode = roomCode;
+            SelectedRoom = room;
         }
     }
 }

@@ -73,7 +73,7 @@
         #endregion
 
         private MainMenu mainMenu;
-        private RoomList roomList;
+        public RoomList roomList;
         private GameTab gameTab;
     }
 }

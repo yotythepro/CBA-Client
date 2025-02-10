@@ -15,7 +15,7 @@ namespace GaemMoment
     /// <summary>
     /// Window form where the game takes place.
     /// </summary>
-    public partial class GameForm : Form
+    public partial class GameForm : Form, IServerMessager
     {
         const int playerSize = 75;
         const int baseX = 400;
@@ -34,7 +34,7 @@ namespace GaemMoment
         {
             InitializeComponent();
             PlayerForms.Add(this);
-            serverConn = new ServerConn(this);
+            serverConn = ServerConn.Instance;
             serverConn.SendMessage("P");
             this.KeyPreview = true;
             for (int i = 0; i < playerNum; i++)

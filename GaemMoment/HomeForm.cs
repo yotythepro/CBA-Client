@@ -15,15 +15,29 @@ namespace GaemMoment
     /// </summary>
     public partial class HomeForm : Form
     {
-        readonly DBConn connection;
-
+        private static HomeForm instance = null;
+        private static readonly object padlock = new object();
         /// <summary>
         /// Initializes the form and a connection to the database.
         /// </summary>
-        public HomeForm()
+        private HomeForm()
         {
             InitializeComponent();
-            connection = new DBConn(this);
+        }
+
+        public static HomeForm Instance
+        {
+            get
+            {
+                lock (padlock)
+                {
+                    if (instance == null)
+                    {
+                        instance = new HomeForm();
+                    }
+                    return instance;
+                }
+            }
         }
 
         /// <summary>
@@ -59,7 +73,7 @@ namespace GaemMoment
                     pronoun2 = PronounBox2.Text;
                     break;
             }
-            connection.InsertNewUser(
+            DBConn.Instance.InsertNewUser(
                 RegUsernameBox.Text,
                 RegPasswordBox.Text,
                 EmailBox.Text,
@@ -80,7 +94,7 @@ namespace GaemMoment
         /// <param name="e">Event arguments.</param>
         private void LoginBtnClick(object sender, EventArgs e)
         {
-            connection.Login(UsernameBox.Text, PasswordBox.Text); 
+            DBConn.Instance.Login(UsernameBox.Text, PasswordBox.Text); 
         }
 
         /// <summary>

@@ -68,7 +68,7 @@ namespace GaemMomentServer
         /// </summary>
         /// <param name="message">Message recieved from client.</param>
         /// <returns>Result to be sent to client.</returns>
-        public string ParseMessage(string message)
+        public string ParseMessage(string message, TcpClient cl)
         {
             List<string> parts = message.Split(',').ToList<string>();
             switch (parts[0])
@@ -91,7 +91,10 @@ namespace GaemMomentServer
                     if (name.Length == 0)
                         return "{L,F}";
                     else
+                    {
+                        Program.AddPlayer(cl, parts[1]);
                         return $"{{L,T,{name}}}";
+                    }
             }
             Console.WriteLine($"Incorrectly formatted database message: {message}");
             return "";

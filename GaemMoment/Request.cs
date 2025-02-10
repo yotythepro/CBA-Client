@@ -8,9 +8,9 @@ namespace GaemMoment
 {
     internal class Request
     {
-        public RequestType Type;
-        public string RoomCodeOrName;
-        public bool? IsPrivate;
+        public RequestType Type { get; set; }
+        public string RoomCodeOrName { get; set; }
+        public bool? IsPrivate { get; set; }
 
         private Request(RequestType type, string roomCodeOrName, bool? isPrivate)
         {

@@ -25,14 +25,14 @@ namespace GaemMoment
             TabChange?.Invoke(this, e);
         }
 
-        protected virtual void ChangeTab(Tab tab)
+        public virtual void ChangeTab(Tab tab)
         {
             OnTabChange(new TabSelectEventArgs(tab));
         }
 
-        protected virtual void ChangeTab(Tab tab, string roomCode)
+        public virtual void ChangeTab(Tab tab, Room room)
         {
-            OnTabChange(new TabSelectEventArgs(tab, roomCode));
+            OnTabChange(new TabSelectEventArgs(tab, room));
         }
     }
 }

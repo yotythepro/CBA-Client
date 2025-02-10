@@ -10,30 +10,19 @@ namespace GaemMoment
 {
     internal static class RoomHandler
     {
-        private static List<Room> _rooms = new List<Room>();
+        private static readonly List<Room> _rooms = new List<Room>();
         public static List<Room> Rooms { get { return _rooms; } }
 
-        public static void UpdateRooms()
+        public static void UpdateRooms(List<Room> newRoomList)
         {
             Rooms.Clear();
-            Rooms.AddRange(new Room[] {
-                new Room(
-                    "Roomie Room",
-                    "15TROOM",
-                    "yotythepro"
-                ),
-                new Room(
-                    "Woooo",
-                    "0TH3RRO0M",
-                    "nameOfTheUser"
-                )
-            });
+            Rooms.AddRange(newRoomList);
         }
 
-        public static void SendRequest(Request request, ServerConn conn)
+        public static void SendRequest(Request request)
         {
             string message = JsonSerializer.Serialize(request);
-            conn.SendMessage(message);
+            ServerConn.Instance.SendMessage(message);
         }
     }
 }

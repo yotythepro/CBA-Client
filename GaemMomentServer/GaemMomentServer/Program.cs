@@ -14,7 +14,7 @@ namespace GaemMomentServer {
     /// </summary>
     internal class Program {
         readonly static int port = 5000;
-        readonly IDictionary<TcpClient, Player> players = new Dictionary<TcpClient, Player>();
+        readonly static IDictionary<TcpClient, Player> players = new Dictionary<TcpClient, Player>();
         readonly TcpListener server = new TcpListener(IPAddress.Any, port);
 
         /// <summary>
@@ -106,16 +106,14 @@ namespace GaemMomentServer {
                         pl.xSpeed = 0; break;
                     case 'A':
                         pl.Attack(); break;
-                    case 'P':
-                        AddPlayer(cl); break;
                     case 'D':
                         DBConn conn = new DBConn();
-                        SendMessage(conn.ParseMessage(messageReceived.Substring(1)), cl);
+                        SendMessage("D" + conn.ParseMessage(messageReceived.Substring(1), cl), cl);
                         break;
                     case '{':
                         Request request = JsonSerializer.Deserialize<Request>(messageReceived);
                         Response response = request.Handle(players[cl]);
-                        SendMessage(JsonSerializer.Serialize(response), cl);
+                        SendMessage("R" + JsonSerializer.Serialize(response), cl);
                         break;
 
                 }
@@ -204,15 +202,9 @@ namespace GaemMomentServer {
         /// Adds a <c>Player</c> to the game.
         /// </summary>
         /// <param name="client">Client controlling said player.</param>
-        private void AddPlayer(TcpClient client)
+        public static void AddPlayer(TcpClient client, string name)
         {
-            if (players.Count == 0)
-            {
-                players.Add(client, new Player(-3, 0, true));
-                Task.Run(() => Update());
-            }
-            else if (players.Count == 1)
-                players.Add(client, new Player(3, 0, false));
+            players.Add(client, new Player(name, client));
         }
     }
 }

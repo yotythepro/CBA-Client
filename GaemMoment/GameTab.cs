@@ -17,9 +17,9 @@ namespace GaemMoment
             InitializeComponent();
         }
 
-        public void UpdateCode(string code)
+        public void UpdateRoom(Room room)
         {
-            label1.Text = $"Room code: {code}";
+            label1.Text = $"Room code: {room.RoomCode}\nRoom name: {room.Name}\nRoom creator: {room.CreatorUserName}";
         }
     }
 }

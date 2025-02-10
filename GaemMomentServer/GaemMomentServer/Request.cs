@@ -8,9 +8,9 @@ namespace GaemMomentServer
 {
     internal class Request
     {
-        public RequestType Type;
-        public string RoomCodeOrName;
-        public bool? IsPrivate;
+        public RequestType Type { get; set; }
+        public string RoomCodeOrName { get; set; }
+        public bool? IsPrivate { get; set; }
         
 
         public Response Handle(Player player)
@@ -42,7 +42,7 @@ namespace GaemMomentServer
                     {
                         return new Response(Type, false, null, "Room is full");
                     }
-                    return new Response(Type, true, null, null);
+                    return new Response(Type, true, RoomHandler.Encapsulate(new List<Room> { room }), null);
                 case RequestType.CLOSE_ROOM:
                     if (room == null)
                     {

@@ -16,19 +16,30 @@ namespace GaemMoment
     /// <summary>
     /// Class used to communicate with the database through the server.
     /// </summary>
-    internal class DBConn
+    internal class DBConn : IServerMessager
     {
-        readonly ServerConn sv;
-        readonly HomeForm form;
+        private static DBConn instance = null;
+        private static readonly object padlock = new object();
 
         /// <summary>
         /// Initializes connection to database through the server.
         /// </summary>
         /// <param name="form">The <c>HomeForm</c> calling the constructor</param>
-        public DBConn(HomeForm form)
+        private DBConn() { }
+
+        public static DBConn Instance
         {
-            sv = new ServerConn(this);
-            this.form = form;
+            get
+            {
+                lock (padlock)
+                {
+                    if (instance == null)
+                    {
+                        instance = new DBConn();
+                    }
+                    return instance;
+                }
+            }
         }
 
         /// <summary>
@@ -81,7 +92,7 @@ namespace GaemMoment
                 $"'{pronoun1}'," +
                 $"'{pronoun2}'," +
                 $"{(genderSpecified ? $"'{gender}'" : "NULL")}";
-            sv.SendMessage(command);
+            ServerConn.Instance.SendMessage(command);
         }
 
         /// <summary>
@@ -91,7 +102,7 @@ namespace GaemMoment
         /// <param name="password">Password entered.</param>
         public void Login(String username, String password)
         {
-            sv.SendMessage($"DL,{username},{password}");
+            ServerConn.Instance.SendMessage($"DL,{username},{password}");
         }
 
         /// <summary>
@@ -156,8 +167,8 @@ namespace GaemMoment
                     {
                         MessageBox.Show($"Logged in successfully, hello {parts[2]}");
 
-                        MainForm nameForm = new MainForm();
-                        form.Invoke((MethodInvoker)delegate
+                        MainForm nameForm = MainForm.Instance;
+                        HomeForm.Instance.Invoke((MethodInvoker)delegate
                         {
                             nameForm.Show();
                         });

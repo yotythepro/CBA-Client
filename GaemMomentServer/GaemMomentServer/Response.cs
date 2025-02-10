@@ -8,10 +8,10 @@ namespace GaemMomentServer
 {
     internal class Response
     {
-        public RequestType Type;
-        public bool Success;
-        public List<EncapsulatedRoom> Body;
-        public string ErrorMessage;
+        public RequestType Type { get; set; }
+        public bool Success { get; set; }
+        public List<EncapsulatedRoom> Body { get; set; }
+        public string ErrorMessage { get; set; }
 
         public Response(RequestType type, bool success, List<EncapsulatedRoom> body, string errorMessage)
         {

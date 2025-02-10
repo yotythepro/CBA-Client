@@ -39,6 +39,7 @@
             this.JoinRoomButton = new System.Windows.Forms.Button();
             this.JoinPrivateRoomButton = new System.Windows.Forms.Button();
             this.RefreshListButton = new System.Windows.Forms.Button();
+            this.publicRoomCheckbox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // RoomSelectionList
@@ -81,7 +82,7 @@
             // CreateRoomButton
             // 
             this.CreateRoomButton.AutoSize = true;
-            this.CreateRoomButton.Location = new System.Drawing.Point(3, 496);
+            this.CreateRoomButton.Location = new System.Drawing.Point(3, 487);
             this.CreateRoomButton.Name = "CreateRoomButton";
             this.CreateRoomButton.Size = new System.Drawing.Size(79, 23);
             this.CreateRoomButton.TabIndex = 2;
@@ -121,10 +122,23 @@
             this.RefreshListButton.UseVisualStyleBackColor = true;
             this.RefreshListButton.Click += new System.EventHandler(this.RefreshListButton_Click);
             // 
+            // publicRoomCheckbox
+            // 
+            this.publicRoomCheckbox.AutoSize = true;
+            this.publicRoomCheckbox.Checked = true;
+            this.publicRoomCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.publicRoomCheckbox.Location = new System.Drawing.Point(3, 516);
+            this.publicRoomCheckbox.Name = "publicRoomCheckbox";
+            this.publicRoomCheckbox.Size = new System.Drawing.Size(146, 17);
+            this.publicRoomCheckbox.TabIndex = 6;
+            this.publicRoomCheckbox.Text = "Let Your Room Be Visible";
+            this.publicRoomCheckbox.UseVisualStyleBackColor = true;
+            // 
             // RoomList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.publicRoomCheckbox);
             this.Controls.Add(this.RefreshListButton);
             this.Controls.Add(this.JoinPrivateRoomButton);
             this.Controls.Add(this.JoinRoomButton);
@@ -148,5 +162,6 @@
         private System.Windows.Forms.Button JoinRoomButton;
         private System.Windows.Forms.Button JoinPrivateRoomButton;
         private System.Windows.Forms.Button RefreshListButton;
+        private System.Windows.Forms.CheckBox publicRoomCheckbox;
     }
 }

@@ -15,7 +15,7 @@ namespace GaemMoment
         public RoomList()
         {
             InitializeComponent();
-            UpdateList();
+            RoomHandler.SendRequest(Request.GetRequest());
         }
 
         private void BackButton_Click(object sender, EventArgs e)
@@ -25,17 +25,23 @@ namespace GaemMoment
 
         private void CreateRoomButton_Click(object sender, EventArgs e)
         {
-            ChangeTab(Tab.GAME, "N3WR00M");
+            InputBox inputBox = new InputBox("Enter Room Name:");
+
+            if (inputBox.ShowDialog() == DialogResult.OK)
+            {
+                RoomHandler.SendRequest(Request.CreateRequest(!publicRoomCheckbox.Checked, inputBox.TextBox.Text));
+            }
         }
 
         private void RefreshListButton_Click(object sender, EventArgs e)
         {
-            UpdateList();
+            RoomHandler.SendRequest(Request.GetRequest());
         }
 
         private void JoinRoomButton_Click(object sender, EventArgs e)
         {
-            ChangeTab(Tab.GAME, RoomHandler.Rooms[RoomSelectionList.SelectedIndices[0]].RoomCode);
+            Room room = RoomHandler.Rooms[RoomSelectionList.SelectedIndices[0]];
+            RoomHandler.SendRequest(Request.JoinRequest(room.RoomCode));
         }
 
         private void JoinPrivateRoomButton_Click(object sender, EventArgs e)
@@ -44,18 +50,18 @@ namespace GaemMoment
 
             if (inputBox.ShowDialog() == DialogResult.OK)
             {
-                ChangeTab(Tab.GAME, inputBox.TextBox.Text);
+                RoomHandler.SendRequest(Request.JoinRequest(inputBox.TextBox.Text));
             }
         }
 
-        private void UpdateList()
+        public void UpdateList(List<Room> newRoomList)
         {
-            RoomHandler.UpdateRooms();
             RoomSelectionList.Items.Clear();
-            foreach (Room room in RoomHandler.Rooms)
+            foreach (Room room in newRoomList)
             {
                 RoomSelectionList.Items.Add(new ListViewItem(new string[] { room.CreatorUserName, room.Name }));
             }
+            RoomHandler.UpdateRooms(newRoomList);
         }
     }
 }

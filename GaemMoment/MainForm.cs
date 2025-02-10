@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,10 +14,12 @@ namespace GaemMoment
 {
     public partial class MainForm : Form
     {
-        protected readonly ReadOnlyDictionary<Tab, TabChangingControl> Tabs;
+        private static MainForm instance = null;
+        private static readonly object padlock = new object();
 
-        protected TabChangingControl CurrentlySelectedTab;
-        public MainForm()
+        protected readonly ReadOnlyDictionary<Tab, TabChangingControl> Tabs;
+        public TabChangingControl CurrentlySelectedTab;
+        private MainForm()
         {
             InitializeComponent();
             Tabs = new ReadOnlyDictionary<Tab, TabChangingControl>(new Dictionary<Tab, TabChangingControl>
@@ -35,13 +38,28 @@ namespace GaemMoment
             CurrentlySelectedTab = mainMenu;
         }
 
+        public static MainForm Instance
+        {
+            get
+            {
+                lock (padlock)
+                {
+                    if (instance == null)
+                    {
+                        instance = new MainForm();
+                    }
+                    return instance;
+                }
+            }
+        }
+
         protected void ChangeTab(object sender, EventArgs e)
         {
             TabSelectEventArgs args = (TabSelectEventArgs)e;
 
-            if (args.RoomCode != null) 
+            if (args.SelectedRoom != null) 
             {
-                gameTab.UpdateCode(args.RoomCode);
+                gameTab.UpdateRoom(args.SelectedRoom);
             }
             DisableTab(CurrentlySelectedTab);
             EnableTab(Tabs[args.SelectedTab]);

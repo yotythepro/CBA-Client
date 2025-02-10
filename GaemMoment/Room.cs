@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GaemMoment
 {
-    internal class Room
+    public class Room
     {
         public string Name { get; }
         public string RoomCode { get; }
