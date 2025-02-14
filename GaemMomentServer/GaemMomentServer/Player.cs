@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,14 +30,15 @@ namespace GaemMomentServer
         public bool facingRight;
         public bool isAlive = true;
         private double timeSinceAttack = 0;
-        public string Name;
-        public TcpClient Client;
+        public string name;
+        public TcpClient cl;
         public bool IsInRoom = false;
+        public Room room;
 
         public Player(string name, TcpClient client)
         {
-            Name = name;
-            Client = client;
+            this.name = name;
+            cl = client;
         }
 
         /// <summary>
@@ -53,6 +55,11 @@ namespace GaemMomentServer
             id = count++;
             allPlayers.Add(this);
             StartRunning();
+        }
+
+        public void SendAlert(Alert alert)
+        {
+            Program.SendMessage("A" + JsonSerializer.Serialize(alert), cl);
         }
 
         /// <summary>

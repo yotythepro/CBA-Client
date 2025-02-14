@@ -16,7 +16,7 @@ namespace GaemMomentServer
         {
             Name = room.Name;
             RoomCode = room.RoomCode;
-            CreatorUserName = room.Creator.Name;
+            CreatorUserName = room.Creator.name;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace GaemMomentServer
 
         public static List<EncapsulatedRoom> Encapsulate(List<Room> rooms)
         {
-            return Rooms.Select(room => new EncapsulatedRoom(room)).ToList();
+            return rooms.Select(room => new EncapsulatedRoom(room)).ToList();
         }
 
         public static string GenerateCode()

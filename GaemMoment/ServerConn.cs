@@ -135,6 +135,10 @@ namespace GaemMoment {
                 case 'D':
                     DBConn.Instance.ParseMessage(body);
                     break;
+                case 'A':
+                    Alert alert = JsonSerializer.Deserialize<Alert>(body);
+                    alert?.Handle();
+                    break;
             }
             MessageBox.Show(message);
         }

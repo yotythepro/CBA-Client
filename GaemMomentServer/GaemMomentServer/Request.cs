@@ -42,6 +42,11 @@ namespace GaemMomentServer
                     {
                         return new Response(Type, false, null, "Room is full");
                     }
+                    foreach (Player pl in room.PlayerList)
+                    {
+                        if (pl.name != player.name)
+                            pl.SendAlert(new Alert(AlertType.PLAYER_JOIN, player.name));
+                    }
                     return new Response(Type, true, RoomHandler.Encapsulate(new List<Room> { room }), null);
                 case RequestType.CLOSE_ROOM:
                     if (room == null)

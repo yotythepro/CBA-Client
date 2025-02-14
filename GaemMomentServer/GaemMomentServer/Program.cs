@@ -115,7 +115,16 @@ namespace GaemMomentServer {
                         Response response = request.Handle(players[cl]);
                         SendMessage("R" + JsonSerializer.Serialize(response), cl);
                         break;
-
+                    case 'M':
+                        if (pl.IsInRoom)
+                        {
+                            foreach (Player player in pl.room.PlayerList)
+                            {
+                                if (player.name != pl.name)
+                                    SendMessage(messageReceived, player.cl);
+                            }
+                        }
+                        break;
                 }
 
                 args = new CallbackArgs(ns, data, cl);
@@ -172,7 +181,7 @@ namespace GaemMomentServer {
         /// </summary>
         /// <param name="message">Message to send.</param>
         /// <param name="cl">Client to send message to.</param>
-        private void SendMessage(string message, TcpClient cl)
+        public static void SendMessage(string message, TcpClient cl)
         {
             try
             {

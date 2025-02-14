@@ -22,6 +22,8 @@ namespace GaemMomentServer
             Name = name;
             RoomCode = roomCode;
             Creator = creator;
+            Creator.room = this;
+            Creator.IsInRoom = true;
             IsPrivate = isPrivate;
             PlayerList = new List<Player>
             {
@@ -36,6 +38,7 @@ namespace GaemMomentServer
             {
                 PlayerList.Add(player);
                 player.IsInRoom = true;
+                player.room = this;
                 return true;
             }
             return false;

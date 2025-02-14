@@ -92,6 +92,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alert.cs" />
+    <Compile Include="AlertType.cs" />
     <Compile Include="GameTab.cs">
       <SubType>UserControl</SubType>
     </Compile>

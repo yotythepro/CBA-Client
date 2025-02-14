@@ -36,6 +36,7 @@ namespace GaemMoment
                     break;
                 case RequestType.JOIN_ROOM:
                     MainForm.Instance.Invoke(new Action(() => MainForm.Instance.CurrentlySelectedTab.ChangeTab(Tab.GAME, Body[0])));
+                    MainForm.Instance.Invoke(new Action(() => MainForm.Instance.gameTab.UpdateOpponentName(Body[0].CreatorUserName)));
                     break;
                 case RequestType.GET_ROOM_LIST:
                     MainForm.Instance.Invoke(new Action(() => MainForm.Instance.roomList.UpdateList(Body)));

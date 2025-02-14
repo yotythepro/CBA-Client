@@ -88,6 +88,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alert.cs" />
+    <Compile Include="AlertType.cs" />
     <Compile Include="CallbackArgs.cs" />
     <Compile Include="DBConn.cs" />
     <Compile Include="EncapsulatedRoom.cs" />

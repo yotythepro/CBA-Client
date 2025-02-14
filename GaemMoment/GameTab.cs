@@ -21,5 +21,10 @@ namespace GaemMoment
         {
             label1.Text = $"Room code: {room.RoomCode}\nRoom name: {room.Name}\nRoom creator: {room.CreatorUserName}";
         }
+
+        public void UpdateOpponentName(string opponentName)
+        {
+            label2.Text = $"VS: {opponentName}";
+        }
     }
 }

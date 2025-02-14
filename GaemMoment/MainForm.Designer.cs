@@ -74,6 +74,6 @@
 
         private MainMenu mainMenu;
         public RoomList roomList;
-        private GameTab gameTab;
+        public GameTab gameTab;
     }
 }
