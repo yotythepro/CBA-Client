@@ -20,6 +20,7 @@ namespace GaemMoment
 
         protected readonly ReadOnlyDictionary<Tab, TabChangingControl> Tabs;
         public TabChangingControl CurrentlySelectedTab;
+        private bool BoardLoaded = false;
         private MainForm()
         {
             InitializeComponent();
@@ -59,6 +60,12 @@ namespace GaemMoment
             TabSelectEventArgs args = (TabSelectEventArgs)e;
             if (args.SelectedTab == Tab.GAME)
             {
+                if (!BoardLoaded)
+                {
+                    Images.Load();
+                    BoardGraphic.DrawBoard(0, 0);
+                    BoardLoaded = true;
+                }
                 Invoke(new Action(() => gameTab.Board = new ChessBoard()));
                 Invoke(new Action(() => gameTab.UpdateGraphics()));
                 

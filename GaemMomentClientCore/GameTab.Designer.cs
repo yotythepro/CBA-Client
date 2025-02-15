@@ -94,7 +94,7 @@
             Controls.Add(label1);
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             Name = "GameTab";
-            Size = new System.Drawing.Size(455, 435);
+            Size = new System.Drawing.Size(1000, 1000);
             ResumeLayout(false);
             PerformLayout();
         }

@@ -52,10 +52,10 @@
             // gameTab
             // 
             gameTab.Enabled = false;
-            gameTab.Location = new System.Drawing.Point(3, 81);
+            gameTab.Location = new System.Drawing.Point(0, 0);
             gameTab.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             gameTab.Name = "gameTab";
-            gameTab.Size = new System.Drawing.Size(569, 545);
+            gameTab.Size = new System.Drawing.Size(1000, 1000);
             gameTab.TabIndex = 2;
             gameTab.Visible = false;
             // 
@@ -63,7 +63,7 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(642, 687);
+            ClientSize = new System.Drawing.Size(1084, 1061);
             Controls.Add(gameTab);
             Controls.Add(mainMenu);
             Controls.Add(roomList);

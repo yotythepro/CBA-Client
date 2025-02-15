@@ -64,6 +64,7 @@ namespace GaemMoment
         public void UpdateGraphics()
         {
             boardLabel.Text = Board.ToAscii();
+            BoardGraphic.LoadPosition(Board);
         }
 
         private string ToCoordinateNotation(Move move)
