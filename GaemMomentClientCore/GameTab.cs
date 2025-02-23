@@ -15,6 +15,7 @@ namespace GaemMoment
     {
         public ChessBoard Board;
         public PieceColor color = PieceColor.White;
+        public Position? LastClickedPosition = null;
 
         public GameTab()
         {
@@ -47,16 +48,18 @@ namespace GaemMoment
                 isValid = Board.IsValidMove(move);
             }
             catch
-            { 
+            {
                 isValid = false;
             }
-            if (isValid) {
+            if (isValid)
+            {
                 Invoke(new Action(() => Board.Move(move)));
                 UpdateGraphics();
                 ServerConn.Instance.SendMessage($"M{moveText}");
                 moveInputBox.Text = "";
-            } 
-            else {
+            }
+            else
+            {
                 MessageBox.Show($"Invalid move \"{moveText}\"");
             }
         }
@@ -102,9 +105,37 @@ namespace GaemMoment
             }
             else
             {
-                MessageBox.Show($"Your opponent has attempted to perform the illegal move {moveText.Substring(0,2)} to {moveText.Substring(2)}, if you are trying to play a modified version of the game," +
+                MessageBox.Show($"Your opponent has attempted to perform the illegal move {moveText.Substring(0, 2)} to {moveText.Substring(2)}, if you are trying to play a modified version of the game," +
                     $" please make sure you both have the same modifications enabled.");
             }
+        }
+
+        public void ClickPosition(Position position)
+        {
+            if (Board.Turn != color)
+                return;
+            if (LastClickedPosition == null)
+            {
+                LastClickedPosition = position;
+                return;
+            }
+            bool isValid;
+            Move move = null;
+            try
+            {
+                move = new Move((Position) LastClickedPosition, position);
+                isValid = Board.IsValidMove(move);
+            }
+            catch
+            {
+                isValid = false;
+            }
+            if (isValid)
+            {
+                Board.Move(move);
+                UpdateGraphics();
+            }
+            LastClickedPosition = null;
         }
     }
 }

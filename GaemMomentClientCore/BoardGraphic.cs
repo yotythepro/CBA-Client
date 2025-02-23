@@ -1,4 +1,4 @@
-﻿using Chess;
+﻿           using Chess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +13,7 @@ namespace GaemMoment
     {
         public const int BOARD_SIZE = 8;
         static PictureBox[,] board = new PictureBox[BOARD_SIZE, BOARD_SIZE];
+        
         static Dictionary<PieceType, ImageType> PIECE_IMAGES = new()
         {
             {PieceType.Rook, ImageType.Rook},
@@ -52,9 +53,7 @@ namespace GaemMoment
 
         public static void OnClick(object sender, EventArgs e, short rank, short file)
         {
-            //MessageBox.Show(new Position(file, rank).ToString());
-            Square square = Square.GetSquare(new Position(file, rank));
-            MessageBox.Show($"Position: {square.position}\nColor: {square.color}\nPiece: {square.piece.Color} {square.piece.Type}");
+            MainForm.Instance.gameTab.ClickPosition(new Position(file, rank));
         }
 
         public static SquareColor GetCorrectColor(int rank, int file)
