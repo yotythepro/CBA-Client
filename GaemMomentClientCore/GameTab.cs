@@ -32,41 +32,8 @@ namespace GaemMoment
             label2.Text = $"VS: {opponentName}";
         }
 
-        private void SubmitMoveButton_Click(object sender, EventArgs e)
-        {
-            if (Board.Turn != color)
-            {
-                MessageBox.Show("It is not your turn");
-                return;
-            }
-            string moveText = moveInputBox.Text;
-            bool isValid;
-            Move move = null;
-            try
-            {
-                move = FromCoordinateNotation(moveText);
-                isValid = Board.IsValidMove(move);
-            }
-            catch
-            {
-                isValid = false;
-            }
-            if (isValid)
-            {
-                Invoke(new Action(() => Board.Move(move)));
-                UpdateGraphics();
-                ServerConn.Instance.SendMessage($"M{moveText}");
-                moveInputBox.Text = "";
-            }
-            else
-            {
-                MessageBox.Show($"Invalid move \"{moveText}\"");
-            }
-        }
-
         public void UpdateGraphics()
         {
-            boardLabel.Text = Board.ToAscii();
             BoardGraphic.LoadPosition(Board);
         }
 
@@ -116,7 +83,8 @@ namespace GaemMoment
                 return;
             if (LastClickedPosition == null)
             {
-                LastClickedPosition = position;
+                if (Board[position] != null && Board[position].Color == color)
+                    LastClickedPosition = position;
                 return;
             }
             bool isValid;
@@ -132,8 +100,9 @@ namespace GaemMoment
             }
             if (isValid)
             {
-                Board.Move(move);
+                Invoke(new Action(() => Board.Move(move)));
                 UpdateGraphics();
+                ServerConn.Instance.SendMessage($"M{ToCoordinateNotation(move)}");
             }
             LastClickedPosition = null;
         }
