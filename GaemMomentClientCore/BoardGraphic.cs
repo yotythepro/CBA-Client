@@ -75,7 +75,7 @@ namespace GaemMoment
                 for (short j = 0; j < BOARD_SIZE; j++)
                 {
                     Position pos = new Position(j, i);
-                    if (!IsSamePiece(loadedBoard[pos], Square.GetSquare(pos).piece)) {
+                    if (!IsSamePiece(loadedBoard[pos], Square.GetSquare(pos).piece) || Square.GetSquare(pos).ColorChangeNeeded) {
                         Square.GetSquare(pos).piece = loadedBoard[pos];
                         if (loadedBoard[pos] == null)
                         {
@@ -85,6 +85,7 @@ namespace GaemMoment
                         {
                             board[i, j].Image = Images.Squares[Square.GetSquare(pos).color][loadedBoard[pos].Color][PIECE_IMAGES[loadedBoard[pos].Type]];
                         }
+                        Square.GetSquare(pos).ColorChangeNeeded = false;
                     }
                 }
             }

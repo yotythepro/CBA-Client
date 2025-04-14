@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace GaemMomentServer
 {
@@ -34,7 +35,8 @@ namespace GaemMomentServer
         /// <returns>True if exists, false otherwise.</returns>
         public bool Exists(string username)
         {
-            command.CommandText = $"SELECT COUNT(username) FROM TabLPlusRatio WHERE username={username}";
+            command.CommandText = $"SELECT COUNT(username) FROM TabLPlusRatio WHERE username='{Encryption.GetHash(username[1..^1])}'";
+            Console.WriteLine(command.CommandText);
             command.Connection = connection;
             connection.Open();
             int n = (int)command.ExecuteScalar();
@@ -50,17 +52,20 @@ namespace GaemMomentServer
         /// <returns>True if exists, false otherwise.</returns>
         public string Exists(string username, string password)
         {
-            command.CommandText = $"SELECT firstname FROM TabLPlusRatio WHERE username='{username}' AND password='{password}'";
+            command.CommandText = $"SELECT firstname, email FROM TabLPlusRatio WHERE username='{Encryption.GetHash(username)}' AND password='{Encryption.GetHash(password)}'";
+            Console.WriteLine(command.CommandText);
             command.Connection = connection;
             connection.Open();
             SqlDataReader reader = command.ExecuteReader();
             string firstName = "";
+            string email = "";
             if (reader.Read())
             {
                 firstName = reader.GetString(reader.GetOrdinal("firstname"));
+                email = reader.GetString(reader.GetOrdinal("email"));
             }
             connection.Close();
-            return firstName;
+            return $"{firstName},{email}";
         }
 
         /// <summary>
@@ -70,7 +75,7 @@ namespace GaemMomentServer
         /// <returns>Result to be sent to client.</returns>
         public string ParseMessage(string message, TcpClient cl)
         {
-            List<string> parts = message.Split(',').ToList<string>();
+            List<string> parts = [.. message.Split(',')];
             switch (parts[0])
             {
                 case "R":
@@ -78,12 +83,12 @@ namespace GaemMomentServer
                         return "{R,F}";
                     else
                     {
-                        command.CommandText = $"INSERT INTO TabLPlusRatio VALUES({message.Substring(2)})";
-                        Console.WriteLine(command.CommandText);
+                        command.CommandText = $"INSERT INTO TabLPlusRatio VALUES({message[2..]})";
                         command.Connection = connection;
                         connection.Open();
                         command.ExecuteNonQuery();
                         connection.Close();
+                        HashCredentials(parts[1], parts[2]);
                         return "{R,T}";
                     }
                 case "L":
@@ -98,6 +103,17 @@ namespace GaemMomentServer
             }
             Console.WriteLine($"Incorrectly formatted database message: {message}");
             return "";
+        }
+
+        void HashCredentials(string username, string password)
+        {
+            command.CommandText = "UPDATE TabLPlusRatio " +
+                $"SET username = '{Encryption.GetHash(username[1..^1])}', password = '{Encryption.GetHash(password[1..^1])}' Where username = {username}";
+            Console.WriteLine(command.CommandText);
+            command.Connection = connection;
+            connection.Open();
+            command.ExecuteNonQuery();
+            connection.Close();
         }
     }
 }

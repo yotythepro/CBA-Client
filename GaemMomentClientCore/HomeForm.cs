@@ -1,4 +1,7 @@
-﻿using System;
+﻿using SendGrid.Helpers.Mail.Model;
+using SendGrid.Helpers.Mail;
+using SendGrid;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,12 +20,21 @@ namespace GaemMoment
     {
         private static HomeForm instance = null;
         private static readonly object padlock = new object();
+        private string CaptchaCode;
+        public string emailCode;
         /// <summary>
         /// Initializes the form and a connection to the database.
         /// </summary>
         private HomeForm()
         {
             InitializeComponent();
+            RegenerateCaptcha();
+        }
+
+        private void RegenerateCaptcha()
+        {
+            CaptchaCode = RandomString();
+            picCaptcha.Image = CaptchaToImage(CaptchaCode, picCaptcha.Width, picCaptcha.Height);
         }
 
         public static HomeForm Instance
@@ -48,9 +60,15 @@ namespace GaemMoment
         /// <param name="e">Event arguments.</param>
         private void RegBtnClick(object sender, EventArgs e)
         {
+            if (CaptchaCode != captchaTextBox.Text)
+            {
+                RegenerateCaptcha();
+                MessageBox.Show("Invalid Captcha");
+                return;
+            }
             string gender = "", pronoun1 = "", pronoun2 = "";
             bool genderSpecified = true;
-            switch(GenderListBox.SelectedIndex)
+            switch (GenderListBox.SelectedIndex)
             {
                 case 0:
                     gender = "Male";
@@ -94,7 +112,7 @@ namespace GaemMoment
         /// <param name="e">Event arguments.</param>
         private void LoginBtnClick(object sender, EventArgs e)
         {
-            DBConn.Instance.Login(UsernameBox.Text, PasswordBox.Text); 
+            DBConn.Instance.Login(UsernameBox.Text, PasswordBox.Text);
         }
 
         /// <summary>
@@ -163,6 +181,80 @@ namespace GaemMoment
         {
             GenderPrompt.Visible = state; GenderPrompt.Enabled = state;
             GenderTextBox.Visible = state; GenderTextBox.Enabled = state;
+        }
+
+        private Bitmap CaptchaToImage(string text, int width, int height)
+        {
+            Bitmap bmp = new Bitmap(width, height);
+            Graphics g = Graphics.FromImage(bmp);
+            SolidBrush sb = new SolidBrush(Color.White);
+            g.FillRectangle(sb, 0, 0, bmp.Width, bmp.Height);
+            Font font = new Font("Tahoma", 45);
+            sb = new SolidBrush(Color.Black);
+            g.DrawString(text, font, sb, bmp.Width / 2 - (text.Length / 2) * font.Size, (bmp.Height / 2) - font.Size);
+            int count = 0;
+            Random rand = new Random();
+            while (count < 1000)
+            {
+                sb = new SolidBrush(Color.YellowGreen);
+                g.FillEllipse(sb, rand.Next(0, bmp.Width), rand.Next(0, bmp.Height), 4, 2);
+                count++;
+            }
+            count = 0;
+            while (count < 25)
+            {
+                g.DrawLine(new Pen(Color.Bisque), rand.Next(0, bmp.Width), rand.Next(0, bmp.Height), rand.Next(0, bmp.Width), rand.Next(0, bmp.Height));
+                count++;
+            }
+            return bmp;
+        }
+
+        public string RandomString()
+        {
+            Random rnd = new Random();
+            int number = rnd.Next(10000, 99999);
+            return MD5(number.ToString()).ToUpperInvariant()[..6];
+        }
+
+        public string MD5(string input)
+        {
+            byte[] hashedBytes = System.Security.Cryptography.MD5.HashData(UnicodeEncoding.Unicode.GetBytes(input));
+            return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+        }
+
+        private void RegenerateCaptchaButton_Click(object sender, EventArgs e)
+        {
+            RegenerateCaptcha();
+        }
+
+        public async Task SendMail(string email, string name, string message)
+        {
+
+            // Your SendGrid API Key you created above.
+            string apiKey = "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";
+
+            // Create an instance of the SendGrid Mail Client using the valid API Key
+            var client = new SendGridClient(apiKey);
+
+            // Use the From Email as the Email you verified above
+            var senderEmail = new EmailAddress("chessbattleawesome@gmail.com", "Garry Chess, Inventor of Chess");
+
+            // The recipient of the email
+            var recieverEmail = new EmailAddress(email, name);
+
+            // Define the Email Subject
+            string emailSubject = "Hello World! This is my Subject (no I will not bother changing this";
+
+            string textContent = message;
+
+            // HTML content -> for clients supporting HTML, this is default
+            string htmlContent = message;
+
+            // construct the email to send via the SendGrid email api
+            var msg = MailHelper.CreateSingleEmail(senderEmail, recieverEmail, emailSubject, textContent, htmlContent);
+
+            // send the email asyncronously
+            var resp = await client.SendEmailAsync(msg).ConfigureAwait(false);
         }
     }
 }

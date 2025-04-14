@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -24,7 +26,7 @@ namespace GaemMomentServer
         const float jumpSpeed = 20f;
         const float gravity = 50f;
         public static int count = 0;
-        public static List<Player> allPlayers = new List<Player>();
+        public static List<Player> allPlayers = [];
         public bool isAttacking = false;
         public bool recovery = false;
         public bool facingRight;

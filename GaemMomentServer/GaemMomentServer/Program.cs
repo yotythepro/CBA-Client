@@ -15,13 +15,14 @@ namespace GaemMomentServer {
     internal class Program {
         readonly static int port = 5000;
         readonly static IDictionary<TcpClient, Player> players = new Dictionary<TcpClient, Player>();
-        readonly TcpListener server = new TcpListener(IPAddress.Any, port);
+        readonly static IDictionary<TcpClient, ClientEncryptionData> EncryptionData = new Dictionary<TcpClient, ClientEncryptionData>();
+        readonly TcpListener server = new(IPAddress.Any, port);
 
         /// <summary>
         /// Ensures the server start up on program execution.
         /// </summary>
         static void Main() {
-            Program main = new Program();
+            Program main = new();
             main.ServerStart();  //starting the server
 
             Console.ReadLine();
@@ -56,7 +57,7 @@ namespace GaemMomentServer {
             /* here you can add the code to send/receive data */
             Console.WriteLine("new socket: " + client.Client.RemoteEndPoint.ToString());
             byte[] buffer = new byte[client.ReceiveBufferSize];
-            CallbackArgs args = new CallbackArgs(ns, buffer, client);
+            CallbackArgs args = new(ns, buffer, client);
             ns.BeginRead(buffer,
                                           0,
                                           System.Convert.ToInt32(client.ReceiveBufferSize),
@@ -89,42 +90,26 @@ namespace GaemMomentServer {
                     players.Remove(cl);
                     return;
                 }
-                Player pl = null;
-                if (players.ContainsKey(cl))
-                    pl = players[cl];
                 string messageReceived = System.Text.Encoding.ASCII.GetString(data, 0, bytesRead);
                 Console.WriteLine($"{cl.Client.RemoteEndPoint} {messageReceived}");
-                switch (messageReceived[0])
+                if (EncryptionData.TryGetValue(cl, out ClientEncryptionData keychain))
                 {
-                    case 'R':
-                        pl.TurnRight(); break;
-                    case 'L':
-                        pl.TurnLeft(); break;
-                    case 'J':
-                        pl.Jump(); break;
-                    case 'S':
-                        pl.xSpeed = 0; break;
-                    case 'A':
-                        pl.Attack(); break;
-                    case 'D':
-                        DBConn conn = new DBConn();
-                        SendMessage("D" + conn.ParseMessage(messageReceived.Substring(1), cl), cl);
-                        break;
-                    case '{':
-                        Request request = JsonSerializer.Deserialize<Request>(messageReceived);
-                        Response response = request.Handle(players[cl]);
-                        SendMessage("R" + JsonSerializer.Serialize(response), cl);
-                        break;
-                    case 'M':
-                        if (pl.IsInRoom)
-                        {
-                            foreach (Player player in pl.room.PlayerList)
-                            {
-                                if (player.name != pl.name)
-                                    SendMessage(messageReceived, player.cl);
-                            }
-                        }
-                        break;
+                    if (keychain.ConnectionInitialized)
+                    {
+                        HandleMessage(Encryption.DecryptAES(messageReceived, keychain.AESKey, keychain.IV), cl);
+                    }
+                    else
+                    {
+                        string[] AESData = Encryption.DecryptRSA(messageReceived, keychain.PrivateKey).Split(',');
+                        keychain.AESKey = AESData[0];
+                        keychain.IV = AESData[1];
+                        keychain.ConnectionInitialized = true;
+                    }
+                }
+                else
+                {
+                    EncryptionData.Add(cl, new ClientEncryptionData(messageReceived));
+                    SendRawMessage(Encryption.EncryptRSA(EncryptionData[cl].PublicKey, EncryptionData[cl].ClientPublicKey), cl);
                 }
 
                 args = new CallbackArgs(ns, data, cl);
@@ -140,6 +125,45 @@ namespace GaemMomentServer {
             }
         }
 
+        public void HandleMessage(string message, TcpClient cl)
+        {
+            Player pl = null;
+            if (players.TryGetValue(cl, out Player value))
+                pl = value;
+
+            switch (message[0])
+            {
+                case 'R':
+                    pl.TurnRight(); break;
+                case 'L':
+                    pl.TurnLeft(); break;
+                case 'J':
+                    pl.Jump(); break;
+                case 'S':
+                    pl.xSpeed = 0; break;
+                case 'A':
+                    pl.Attack(); break;
+                case 'D':
+                    DBConn conn = new();
+                    SendMessage("D" + conn.ParseMessage(message[1..], cl), cl);
+                    break;
+                case '{':
+                    Request request = JsonSerializer.Deserialize<Request>(message);
+                    Response response = request.Handle(players[cl]);
+                    SendMessage("R" + JsonSerializer.Serialize(response), cl);
+                    break;
+                case 'M':
+                    if (pl.IsInRoom)
+                    {
+                        foreach (Player player in pl.room.PlayerList)
+                        {
+                            if (player.name != pl.name)
+                                SendMessage(message, player.cl);
+                        }
+                    }
+                    break;
+            }
+        }
         /// <summary>
         /// Broadcasts game state to all clients 30 times each second.
         /// </summary>
@@ -181,7 +205,7 @@ namespace GaemMomentServer {
         /// </summary>
         /// <param name="message">Message to send.</param>
         /// <param name="cl">Client to send message to.</param>
-        public static void SendMessage(string message, TcpClient cl)
+        public static void SendRawMessage(string message, TcpClient cl)
         {
             try
             {
@@ -193,6 +217,12 @@ namespace GaemMomentServer {
                 ns.Flush();
             }
             catch (Exception) { }
+        }
+
+        public static void SendMessage(string message, TcpClient cl)
+        {
+            ClientEncryptionData keychain = EncryptionData[cl];
+            SendRawMessage(Encryption.EncryptAES(message, keychain.AESKey, keychain.IV), cl);
         }
 
         /// <summary>

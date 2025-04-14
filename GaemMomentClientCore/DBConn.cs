@@ -19,7 +19,7 @@ namespace GaemMoment
     internal class DBConn : IServerMessager
     {
         private static DBConn instance = null;
-        private static readonly object padlock = new object();
+        private static readonly object padlock = new();
 
         /// <summary>
         /// Initializes connection to database through the server.
@@ -33,10 +33,7 @@ namespace GaemMoment
             {
                 lock (padlock)
                 {
-                    if (instance == null)
-                    {
-                        instance = new DBConn();
-                    }
+                    instance ??= new DBConn();
                     return instance;
                 }
             }
@@ -138,7 +135,7 @@ namespace GaemMoment
         /// <returns>True if <paramref name="email"/> is valid, false if not.</returns>
         public bool ValidateEmail(string email)
         {
-            Regex emailRegex = new Regex(@".{6,}@.+\..+");
+            Regex emailRegex = new(@".{6,}@.+\..+");
             return emailRegex.IsMatch(email);
         }
 
@@ -148,12 +145,12 @@ namespace GaemMoment
         /// <param name="message">Message recieved from server.</param>
         public void ParseMessage(string message)
         {
-            if(!message.StartsWith("{")  || !message.EndsWith("}"))
+            if(!message.StartsWith('{')  || !message.EndsWith('}'))
             {
                 MessageBox.Show($"Poorly formatted message {message}");
                 return;
             }
-            List<String> parts = message.Substring(1, message.Length - 2).Split(',').ToList<string>();
+            List<String> parts = [.. message[1..^1].Split(',')];
             switch(parts[0])
             {
                 case "R":
@@ -165,13 +162,27 @@ namespace GaemMoment
                 case "L":
                     if (parts[1] == "T")
                     {
-                        MessageBox.Show($"Logged in successfully, hello {parts[2]}");
+                        HomeForm.Instance.emailCode = HomeForm.Instance.RandomString();
+                        HomeForm.Instance.SendMail(parts[3], parts[2], $"Code is {HomeForm.Instance.emailCode}").Wait();
+                        InputBox inputBox = new InputBox("We Sencha a code via email, go input it:");
 
-                        MainForm nameForm = MainForm.Instance;
-                        HomeForm.Instance.Invoke((MethodInvoker)delegate
+                        if (inputBox.ShowDialog() == DialogResult.OK && inputBox.TextBox.Text == HomeForm.Instance.emailCode)
                         {
-                            nameForm.Show();
-                        });
+                            MessageBox.Show($"Logged in successfully, hello {parts[2]}");
+
+                            MainForm nameForm = MainForm.Instance;
+                            HomeForm.Instance.Invoke((MethodInvoker)delegate
+                            {
+                                nameForm.Show();
+                            });
+                        }
+                        else
+                        {
+                            MessageBox.Show("Wrong Code");
+                            HomeForm.Instance.SendMail(parts[3], parts[2], $"Someone tried to log into your account but failed the email verification.\n" +
+                                $"This could mean that you entered the code wrong, or that someone else has gained access to your password.\n" +
+                                $"Either way, skill issue.").Wait();
+                        }
                     }
                     else
                         MessageBox.Show("Incorrect username or password");

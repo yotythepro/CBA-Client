@@ -84,9 +84,16 @@ namespace GaemMoment
             if (LastClickedPosition == null)
             {
                 if (Board[position] != null && Board[position].Color == color)
+                {
                     LastClickedPosition = position;
+                    foreach (Move m in Board.Moves(position)) {
+                        Square.GetSquare(m.NewPosition).Highlight();
+                    }
+                    UpdateGraphics();
+                }  
                 return;
             }
+            Square.UnmarkAll();
             bool isValid;
             Move move = null;
             try
@@ -101,9 +108,9 @@ namespace GaemMoment
             if (isValid)
             {
                 Invoke(new Action(() => Board.Move(move)));
-                UpdateGraphics();
                 ServerConn.Instance.SendMessage($"M{ToCoordinateNotation(move)}");
             }
+            UpdateGraphics();
             LastClickedPosition = null;
         }
     }

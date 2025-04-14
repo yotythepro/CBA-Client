@@ -20,6 +20,7 @@ namespace GaemMoment
         }
         public SquareColor color;
         public Piece piece;
+        public bool ColorChangeNeeded = false;
 
         public static void LoadSquares()
         {
@@ -47,11 +48,24 @@ namespace GaemMoment
         public void Highlight()
         {
             color = SquareColor.HIGHLIGHT;
+            ColorChangeNeeded = true;
         }
 
         public void Unmark()
         {
             color = NaturalColor;
+            ColorChangeNeeded = true;
+        }
+
+        public static void UnmarkAll()
+        {
+            for (short i = 0; i < BoardGraphic.BOARD_SIZE; i++)
+            {
+                for (short j = 0; j < BoardGraphic.BOARD_SIZE; j++)
+                {
+                    squares[i, j].Unmark();
+                }
+            }
         }
     }
 }

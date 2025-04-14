@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -21,7 +22,13 @@ namespace GaemMoment {
         readonly NetworkStream ns;
         readonly byte[] data;
         private static ServerConn instance = null;
-        private static readonly object padlock = new object();
+        private static readonly object padlock = new();
+        string PublicKey;
+        string PrivateKey;
+        string ServerPublicKey;
+        string AESKey;
+        string IV;
+        bool ConnectionInitialized = false;
 
         /// <summary>
         /// Initializes a new <c>TcpClient</c> and uses it to connect to the server (Used to connect to the game).
@@ -29,6 +36,14 @@ namespace GaemMoment {
         /// <param name="fr">The <c>GameForm</c> calling this constructor.</param>
         private ServerConn()
         {
+            RSACryptoServiceProvider rsa = new(4096);
+            PrivateKey = Encryption.GetKeyString(rsa.ExportParameters(true));
+            PublicKey = Encryption.GetKeyString(rsa.ExportParameters(false));
+            using (Aes myAes = Aes.Create())
+            {
+                AESKey = Convert.ToBase64String(myAes.Key);
+                IV = Convert.ToBase64String(myAes.IV);
+            }
             try {
                 cl = new TcpClient();
 
@@ -54,10 +69,7 @@ namespace GaemMoment {
             {
                 lock (padlock)
                 {
-                    if (instance == null)
-                    {
-                        instance = new ServerConn();
-                    }
+                    instance ??= new ServerConn();
                     return instance;
                 }
             }
@@ -67,7 +79,7 @@ namespace GaemMoment {
         /// Sends a message to the server.
         /// </summary>
         /// <param name="message">Message to send to the server.</param>
-        public void SendMessage(string message)
+        public void SendRawMessage(string message)
         {
             try
             {
@@ -82,6 +94,24 @@ namespace GaemMoment {
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        public async void SendMessage(string message)
+        {
+            if (!ConnectionInitialized)
+            {
+                InitializeConnection();
+                while (!ConnectionInitialized)
+                {
+                    await Task.Delay(25);
+                }
+            }
+            SendRawMessage(Encryption.EncryptAES(message, AESKey, IV));
+        }
+
+        public void InitializeConnection()
+        {
+            SendRawMessage(PublicKey);
         }
 
         /// <summary>
@@ -107,7 +137,16 @@ namespace GaemMoment {
                 {
                     // invoke the delegate to display the recived data
                     string textFromServer = System.Text.Encoding.ASCII.GetString(data, 0, bytesRead);
-                    HandleMessage(textFromServer);
+                    if (ConnectionInitialized)
+                    {
+                        HandleMessage(Encryption.DecryptAES(textFromServer, AESKey, IV));
+                    }
+                    else
+                    {
+                        ServerPublicKey = Encryption.DecryptRSA(textFromServer, PrivateKey);
+                        SendRawMessage(Encryption.EncryptRSA($"{AESKey},{IV}", ServerPublicKey));
+                        ConnectionInitialized = true;
+                    }
                 }
 
                 // continue reading
@@ -126,7 +165,7 @@ namespace GaemMoment {
         private void HandleMessage(string message)
         {
             char identifier = message[0];
-            string body = message.Substring(1);
+            string body = message[1..];
             switch (identifier)
             {
                 case 'R':

@@ -28,303 +28,369 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.regBtn = new System.Windows.Forms.Button();
-            this.UsernameBox = new System.Windows.Forms.TextBox();
-            this.PasswordBox = new System.Windows.Forms.TextBox();
-            this.loginBtn = new System.Windows.Forms.Button();
-            this.LoginUsernamePrompt = new System.Windows.Forms.Label();
-            this.LoginPasswordPrompt = new System.Windows.Forms.Label();
-            this.RegPasswordPrompt = new System.Windows.Forms.Label();
-            this.RegUsernamePrompt = new System.Windows.Forms.Label();
-            this.RegPasswordBox = new System.Windows.Forms.TextBox();
-            this.RegUsernameBox = new System.Windows.Forms.TextBox();
-            this.EmailPrompt = new System.Windows.Forms.Label();
-            this.EmailBox = new System.Windows.Forms.TextBox();
-            this.LNamePrompt = new System.Windows.Forms.Label();
-            this.FNamePrompt = new System.Windows.Forms.Label();
-            this.LNameBox = new System.Windows.Forms.TextBox();
-            this.FNameBox = new System.Windows.Forms.TextBox();
-            this.CityPrompt = new System.Windows.Forms.Label();
-            this.CityBox = new System.Windows.Forms.ComboBox();
-            this.GenderListBox = new System.Windows.Forms.ComboBox();
-            this.GenderListPrompt = new System.Windows.Forms.Label();
-            this.PronounPrompt = new System.Windows.Forms.Label();
-            this.PronounBox1 = new System.Windows.Forms.TextBox();
-            this.PronounBox2 = new System.Windows.Forms.TextBox();
-            this.PronounSlash = new System.Windows.Forms.Label();
-            this.GenderPrompt = new System.Windows.Forms.Label();
-            this.GenderTextBox = new System.Windows.Forms.TextBox();
-            this.SuspendLayout();
+            regBtn = new System.Windows.Forms.Button();
+            UsernameBox = new System.Windows.Forms.TextBox();
+            PasswordBox = new System.Windows.Forms.TextBox();
+            loginBtn = new System.Windows.Forms.Button();
+            LoginUsernamePrompt = new System.Windows.Forms.Label();
+            LoginPasswordPrompt = new System.Windows.Forms.Label();
+            RegPasswordPrompt = new System.Windows.Forms.Label();
+            RegUsernamePrompt = new System.Windows.Forms.Label();
+            RegPasswordBox = new System.Windows.Forms.TextBox();
+            RegUsernameBox = new System.Windows.Forms.TextBox();
+            EmailPrompt = new System.Windows.Forms.Label();
+            EmailBox = new System.Windows.Forms.TextBox();
+            LNamePrompt = new System.Windows.Forms.Label();
+            FNamePrompt = new System.Windows.Forms.Label();
+            LNameBox = new System.Windows.Forms.TextBox();
+            FNameBox = new System.Windows.Forms.TextBox();
+            CityPrompt = new System.Windows.Forms.Label();
+            CityBox = new System.Windows.Forms.ComboBox();
+            GenderListBox = new System.Windows.Forms.ComboBox();
+            GenderListPrompt = new System.Windows.Forms.Label();
+            PronounPrompt = new System.Windows.Forms.Label();
+            PronounBox1 = new System.Windows.Forms.TextBox();
+            PronounBox2 = new System.Windows.Forms.TextBox();
+            PronounSlash = new System.Windows.Forms.Label();
+            GenderPrompt = new System.Windows.Forms.Label();
+            GenderTextBox = new System.Windows.Forms.TextBox();
+            picCaptcha = new System.Windows.Forms.PictureBox();
+            label1 = new System.Windows.Forms.Label();
+            captchaTextBox = new System.Windows.Forms.TextBox();
+            regenerateCaptchaButton = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)picCaptcha).BeginInit();
+            SuspendLayout();
             // 
             // regBtn
             // 
-            this.regBtn.Location = new System.Drawing.Point(593, 30);
-            this.regBtn.Name = "regBtn";
-            this.regBtn.Size = new System.Drawing.Size(75, 23);
-            this.regBtn.TabIndex = 0;
-            this.regBtn.Text = "Register";
-            this.regBtn.UseVisualStyleBackColor = true;
-            this.regBtn.Click += new System.EventHandler(this.RegBtnClick);
+            regBtn.Location = new System.Drawing.Point(692, 35);
+            regBtn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            regBtn.Name = "regBtn";
+            regBtn.Size = new System.Drawing.Size(88, 27);
+            regBtn.TabIndex = 0;
+            regBtn.Text = "Register";
+            regBtn.UseVisualStyleBackColor = true;
+            regBtn.Click += RegBtnClick;
             // 
             // UsernameBox
             // 
-            this.UsernameBox.Location = new System.Drawing.Point(49, 38);
-            this.UsernameBox.Name = "UsernameBox";
-            this.UsernameBox.Size = new System.Drawing.Size(100, 20);
-            this.UsernameBox.TabIndex = 1;
+            UsernameBox.Location = new System.Drawing.Point(57, 44);
+            UsernameBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            UsernameBox.Name = "UsernameBox";
+            UsernameBox.Size = new System.Drawing.Size(116, 23);
+            UsernameBox.TabIndex = 1;
             // 
             // PasswordBox
             // 
-            this.PasswordBox.Location = new System.Drawing.Point(49, 80);
-            this.PasswordBox.Name = "PasswordBox";
-            this.PasswordBox.Size = new System.Drawing.Size(100, 20);
-            this.PasswordBox.TabIndex = 2;
+            PasswordBox.Location = new System.Drawing.Point(57, 92);
+            PasswordBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            PasswordBox.Name = "PasswordBox";
+            PasswordBox.Size = new System.Drawing.Size(116, 23);
+            PasswordBox.TabIndex = 2;
             // 
             // loginBtn
             // 
-            this.loginBtn.Location = new System.Drawing.Point(155, 35);
-            this.loginBtn.Name = "loginBtn";
-            this.loginBtn.Size = new System.Drawing.Size(75, 23);
-            this.loginBtn.TabIndex = 3;
-            this.loginBtn.Text = "Login";
-            this.loginBtn.UseVisualStyleBackColor = true;
-            this.loginBtn.Click += new System.EventHandler(this.LoginBtnClick);
+            loginBtn.Location = new System.Drawing.Point(181, 40);
+            loginBtn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            loginBtn.Name = "loginBtn";
+            loginBtn.Size = new System.Drawing.Size(88, 27);
+            loginBtn.TabIndex = 3;
+            loginBtn.Text = "Login";
+            loginBtn.UseVisualStyleBackColor = true;
+            loginBtn.Click += LoginBtnClick;
             // 
             // LoginUsernamePrompt
             // 
-            this.LoginUsernamePrompt.AutoSize = true;
-            this.LoginUsernamePrompt.Location = new System.Drawing.Point(49, 22);
-            this.LoginUsernamePrompt.Name = "LoginUsernamePrompt";
-            this.LoginUsernamePrompt.Size = new System.Drawing.Size(55, 13);
-            this.LoginUsernamePrompt.TabIndex = 4;
-            this.LoginUsernamePrompt.Text = "Username";
+            LoginUsernamePrompt.AutoSize = true;
+            LoginUsernamePrompt.Location = new System.Drawing.Point(57, 25);
+            LoginUsernamePrompt.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            LoginUsernamePrompt.Name = "LoginUsernamePrompt";
+            LoginUsernamePrompt.Size = new System.Drawing.Size(60, 15);
+            LoginUsernamePrompt.TabIndex = 4;
+            LoginUsernamePrompt.Text = "Username";
             // 
             // LoginPasswordPrompt
             // 
-            this.LoginPasswordPrompt.AutoSize = true;
-            this.LoginPasswordPrompt.Location = new System.Drawing.Point(49, 61);
-            this.LoginPasswordPrompt.Name = "LoginPasswordPrompt";
-            this.LoginPasswordPrompt.Size = new System.Drawing.Size(53, 13);
-            this.LoginPasswordPrompt.TabIndex = 5;
-            this.LoginPasswordPrompt.Text = "Password";
+            LoginPasswordPrompt.AutoSize = true;
+            LoginPasswordPrompt.Location = new System.Drawing.Point(57, 70);
+            LoginPasswordPrompt.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            LoginPasswordPrompt.Name = "LoginPasswordPrompt";
+            LoginPasswordPrompt.Size = new System.Drawing.Size(57, 15);
+            LoginPasswordPrompt.TabIndex = 5;
+            LoginPasswordPrompt.Text = "Password";
             // 
             // RegPasswordPrompt
             // 
-            this.RegPasswordPrompt.AutoSize = true;
-            this.RegPasswordPrompt.Location = new System.Drawing.Point(473, 56);
-            this.RegPasswordPrompt.Name = "RegPasswordPrompt";
-            this.RegPasswordPrompt.Size = new System.Drawing.Size(53, 13);
-            this.RegPasswordPrompt.TabIndex = 9;
-            this.RegPasswordPrompt.Text = "Password";
+            RegPasswordPrompt.AutoSize = true;
+            RegPasswordPrompt.Location = new System.Drawing.Point(448, 64);
+            RegPasswordPrompt.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            RegPasswordPrompt.Name = "RegPasswordPrompt";
+            RegPasswordPrompt.Size = new System.Drawing.Size(57, 15);
+            RegPasswordPrompt.TabIndex = 9;
+            RegPasswordPrompt.Text = "Password";
             // 
             // RegUsernamePrompt
             // 
-            this.RegUsernamePrompt.AutoSize = true;
-            this.RegUsernamePrompt.Location = new System.Drawing.Point(473, 17);
-            this.RegUsernamePrompt.Name = "RegUsernamePrompt";
-            this.RegUsernamePrompt.Size = new System.Drawing.Size(55, 13);
-            this.RegUsernamePrompt.TabIndex = 8;
-            this.RegUsernamePrompt.Text = "Username";
+            RegUsernamePrompt.AutoSize = true;
+            RegUsernamePrompt.Location = new System.Drawing.Point(448, 19);
+            RegUsernamePrompt.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            RegUsernamePrompt.Name = "RegUsernamePrompt";
+            RegUsernamePrompt.Size = new System.Drawing.Size(60, 15);
+            RegUsernamePrompt.TabIndex = 8;
+            RegUsernamePrompt.Text = "Username";
             // 
             // RegPasswordBox
             // 
-            this.RegPasswordBox.Location = new System.Drawing.Point(473, 75);
-            this.RegPasswordBox.Name = "RegPasswordBox";
-            this.RegPasswordBox.Size = new System.Drawing.Size(100, 20);
-            this.RegPasswordBox.TabIndex = 7;
+            RegPasswordBox.Location = new System.Drawing.Point(448, 86);
+            RegPasswordBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            RegPasswordBox.Name = "RegPasswordBox";
+            RegPasswordBox.Size = new System.Drawing.Size(116, 23);
+            RegPasswordBox.TabIndex = 7;
             // 
             // RegUsernameBox
             // 
-            this.RegUsernameBox.Location = new System.Drawing.Point(473, 33);
-            this.RegUsernameBox.Name = "RegUsernameBox";
-            this.RegUsernameBox.Size = new System.Drawing.Size(100, 20);
-            this.RegUsernameBox.TabIndex = 6;
+            RegUsernameBox.Location = new System.Drawing.Point(448, 37);
+            RegUsernameBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            RegUsernameBox.Name = "RegUsernameBox";
+            RegUsernameBox.Size = new System.Drawing.Size(116, 23);
+            RegUsernameBox.TabIndex = 6;
             // 
             // EmailPrompt
             // 
-            this.EmailPrompt.AutoSize = true;
-            this.EmailPrompt.Location = new System.Drawing.Point(473, 186);
-            this.EmailPrompt.Name = "EmailPrompt";
-            this.EmailPrompt.Size = new System.Drawing.Size(32, 13);
-            this.EmailPrompt.TabIndex = 11;
-            this.EmailPrompt.Text = "Email";
+            EmailPrompt.AutoSize = true;
+            EmailPrompt.Location = new System.Drawing.Point(448, 214);
+            EmailPrompt.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            EmailPrompt.Name = "EmailPrompt";
+            EmailPrompt.Size = new System.Drawing.Size(36, 15);
+            EmailPrompt.TabIndex = 11;
+            EmailPrompt.Text = "Email";
             // 
             // EmailBox
             // 
-            this.EmailBox.Location = new System.Drawing.Point(473, 205);
-            this.EmailBox.Name = "EmailBox";
-            this.EmailBox.Size = new System.Drawing.Size(100, 20);
-            this.EmailBox.TabIndex = 10;
+            EmailBox.Location = new System.Drawing.Point(448, 236);
+            EmailBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EmailBox.Name = "EmailBox";
+            EmailBox.Size = new System.Drawing.Size(116, 23);
+            EmailBox.TabIndex = 10;
             // 
             // LNamePrompt
             // 
-            this.LNamePrompt.AutoSize = true;
-            this.LNamePrompt.Location = new System.Drawing.Point(473, 143);
-            this.LNamePrompt.Name = "LNamePrompt";
-            this.LNamePrompt.Size = new System.Drawing.Size(58, 13);
-            this.LNamePrompt.TabIndex = 15;
-            this.LNamePrompt.Text = "Last Name";
+            LNamePrompt.AutoSize = true;
+            LNamePrompt.Location = new System.Drawing.Point(448, 164);
+            LNamePrompt.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            LNamePrompt.Name = "LNamePrompt";
+            LNamePrompt.Size = new System.Drawing.Size(63, 15);
+            LNamePrompt.TabIndex = 15;
+            LNamePrompt.Text = "Last Name";
             // 
             // FNamePrompt
             // 
-            this.FNamePrompt.AutoSize = true;
-            this.FNamePrompt.Location = new System.Drawing.Point(473, 104);
-            this.FNamePrompt.Name = "FNamePrompt";
-            this.FNamePrompt.Size = new System.Drawing.Size(57, 13);
-            this.FNamePrompt.TabIndex = 14;
-            this.FNamePrompt.Text = "First Name";
+            FNamePrompt.AutoSize = true;
+            FNamePrompt.Location = new System.Drawing.Point(448, 119);
+            FNamePrompt.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            FNamePrompt.Name = "FNamePrompt";
+            FNamePrompt.Size = new System.Drawing.Size(64, 15);
+            FNamePrompt.TabIndex = 14;
+            FNamePrompt.Text = "First Name";
             // 
             // LNameBox
             // 
-            this.LNameBox.Location = new System.Drawing.Point(473, 162);
-            this.LNameBox.Name = "LNameBox";
-            this.LNameBox.Size = new System.Drawing.Size(100, 20);
-            this.LNameBox.TabIndex = 13;
+            LNameBox.Location = new System.Drawing.Point(448, 186);
+            LNameBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            LNameBox.Name = "LNameBox";
+            LNameBox.Size = new System.Drawing.Size(116, 23);
+            LNameBox.TabIndex = 13;
             // 
             // FNameBox
             // 
-            this.FNameBox.Location = new System.Drawing.Point(473, 120);
-            this.FNameBox.Name = "FNameBox";
-            this.FNameBox.Size = new System.Drawing.Size(100, 20);
-            this.FNameBox.TabIndex = 12;
+            FNameBox.Location = new System.Drawing.Point(448, 137);
+            FNameBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            FNameBox.Name = "FNameBox";
+            FNameBox.Size = new System.Drawing.Size(116, 23);
+            FNameBox.TabIndex = 12;
             // 
             // CityPrompt
             // 
-            this.CityPrompt.AutoSize = true;
-            this.CityPrompt.Location = new System.Drawing.Point(470, 231);
-            this.CityPrompt.Name = "CityPrompt";
-            this.CityPrompt.Size = new System.Drawing.Size(24, 13);
-            this.CityPrompt.TabIndex = 17;
-            this.CityPrompt.Text = "City";
+            CityPrompt.AutoSize = true;
+            CityPrompt.Location = new System.Drawing.Point(444, 266);
+            CityPrompt.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            CityPrompt.Name = "CityPrompt";
+            CityPrompt.Size = new System.Drawing.Size(28, 15);
+            CityPrompt.TabIndex = 17;
+            CityPrompt.Text = "City";
             // 
             // CityBox
             // 
-            this.CityBox.FormattingEnabled = true;
-            this.CityBox.Location = new System.Drawing.Point(473, 248);
-            this.CityBox.Name = "CityBox";
-            this.CityBox.Size = new System.Drawing.Size(100, 21);
-            this.CityBox.TabIndex = 18;
+            CityBox.FormattingEnabled = true;
+            CityBox.Location = new System.Drawing.Point(448, 285);
+            CityBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            CityBox.Name = "CityBox";
+            CityBox.Size = new System.Drawing.Size(116, 23);
+            CityBox.TabIndex = 18;
             // 
             // GenderListBox
             // 
-            this.GenderListBox.FormattingEnabled = true;
-            this.GenderListBox.Items.AddRange(new object[] {
-            "Male",
-            "Female",
-            "Other",
-            "Prefer not to specify"});
-            this.GenderListBox.Location = new System.Drawing.Point(473, 295);
-            this.GenderListBox.Name = "GenderListBox";
-            this.GenderListBox.Size = new System.Drawing.Size(100, 21);
-            this.GenderListBox.TabIndex = 20;
-            this.GenderListBox.SelectedIndexChanged += new System.EventHandler(this.GenderListBox_SelectedIndexChanged);
+            GenderListBox.FormattingEnabled = true;
+            GenderListBox.Items.AddRange(new object[] { "Male", "Female", "Other", "Prefer not to specify" });
+            GenderListBox.Location = new System.Drawing.Point(448, 339);
+            GenderListBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            GenderListBox.Name = "GenderListBox";
+            GenderListBox.Size = new System.Drawing.Size(116, 23);
+            GenderListBox.TabIndex = 20;
+            GenderListBox.SelectedIndexChanged += GenderListBox_SelectedIndexChanged;
             // 
             // GenderListPrompt
             // 
-            this.GenderListPrompt.AutoSize = true;
-            this.GenderListPrompt.Location = new System.Drawing.Point(470, 278);
-            this.GenderListPrompt.Name = "GenderListPrompt";
-            this.GenderListPrompt.Size = new System.Drawing.Size(42, 13);
-            this.GenderListPrompt.TabIndex = 19;
-            this.GenderListPrompt.Text = "Gender";
+            GenderListPrompt.AutoSize = true;
+            GenderListPrompt.Location = new System.Drawing.Point(444, 320);
+            GenderListPrompt.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            GenderListPrompt.Name = "GenderListPrompt";
+            GenderListPrompt.Size = new System.Drawing.Size(45, 15);
+            GenderListPrompt.TabIndex = 19;
+            GenderListPrompt.Text = "Gender";
             // 
             // PronounPrompt
             // 
-            this.PronounPrompt.AutoSize = true;
-            this.PronounPrompt.Enabled = false;
-            this.PronounPrompt.Location = new System.Drawing.Point(626, 278);
-            this.PronounPrompt.Name = "PronounPrompt";
-            this.PronounPrompt.Size = new System.Drawing.Size(148, 13);
-            this.PronounPrompt.TabIndex = 21;
-            this.PronounPrompt.Text = "Please specify your pronouns:";
-            this.PronounPrompt.Visible = false;
+            PronounPrompt.AutoSize = true;
+            PronounPrompt.Enabled = false;
+            PronounPrompt.Location = new System.Drawing.Point(639, 328);
+            PronounPrompt.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            PronounPrompt.Name = "PronounPrompt";
+            PronounPrompt.Size = new System.Drawing.Size(164, 15);
+            PronounPrompt.TabIndex = 21;
+            PronounPrompt.Text = "Please specify your pronouns:";
+            PronounPrompt.Visible = false;
             // 
             // PronounBox1
             // 
-            this.PronounBox1.Enabled = false;
-            this.PronounBox1.Location = new System.Drawing.Point(629, 294);
-            this.PronounBox1.Name = "PronounBox1";
-            this.PronounBox1.Size = new System.Drawing.Size(55, 20);
-            this.PronounBox1.TabIndex = 22;
-            this.PronounBox1.Visible = false;
+            PronounBox1.Enabled = false;
+            PronounBox1.Location = new System.Drawing.Point(643, 346);
+            PronounBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            PronounBox1.Name = "PronounBox1";
+            PronounBox1.Size = new System.Drawing.Size(63, 23);
+            PronounBox1.TabIndex = 22;
+            PronounBox1.Visible = false;
             // 
             // PronounBox2
             // 
-            this.PronounBox2.Enabled = false;
-            this.PronounBox2.Location = new System.Drawing.Point(708, 294);
-            this.PronounBox2.Name = "PronounBox2";
-            this.PronounBox2.Size = new System.Drawing.Size(55, 20);
-            this.PronounBox2.TabIndex = 23;
-            this.PronounBox2.Visible = false;
+            PronounBox2.Enabled = false;
+            PronounBox2.Location = new System.Drawing.Point(735, 346);
+            PronounBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            PronounBox2.Name = "PronounBox2";
+            PronounBox2.Size = new System.Drawing.Size(63, 23);
+            PronounBox2.TabIndex = 23;
+            PronounBox2.Visible = false;
             // 
             // PronounSlash
             // 
-            this.PronounSlash.AutoSize = true;
-            this.PronounSlash.Enabled = false;
-            this.PronounSlash.Location = new System.Drawing.Point(690, 298);
-            this.PronounSlash.Name = "PronounSlash";
-            this.PronounSlash.Size = new System.Drawing.Size(12, 13);
-            this.PronounSlash.TabIndex = 24;
-            this.PronounSlash.Text = "/";
-            this.PronounSlash.Visible = false;
+            PronounSlash.AutoSize = true;
+            PronounSlash.Enabled = false;
+            PronounSlash.Location = new System.Drawing.Point(714, 351);
+            PronounSlash.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            PronounSlash.Name = "PronounSlash";
+            PronounSlash.Size = new System.Drawing.Size(12, 15);
+            PronounSlash.TabIndex = 24;
+            PronounSlash.Text = "/";
+            PronounSlash.Visible = false;
             // 
             // GenderPrompt
             // 
-            this.GenderPrompt.AutoSize = true;
-            this.GenderPrompt.Enabled = false;
-            this.GenderPrompt.Location = new System.Drawing.Point(470, 335);
-            this.GenderPrompt.Name = "GenderPrompt";
-            this.GenderPrompt.Size = new System.Drawing.Size(137, 13);
-            this.GenderPrompt.TabIndex = 25;
-            this.GenderPrompt.Text = "Please specify your gender:";
-            this.GenderPrompt.Visible = false;
+            GenderPrompt.AutoSize = true;
+            GenderPrompt.Enabled = false;
+            GenderPrompt.Location = new System.Drawing.Point(444, 386);
+            GenderPrompt.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            GenderPrompt.Name = "GenderPrompt";
+            GenderPrompt.Size = new System.Drawing.Size(150, 15);
+            GenderPrompt.TabIndex = 25;
+            GenderPrompt.Text = "Please specify your gender:";
+            GenderPrompt.Visible = false;
             // 
             // GenderTextBox
             // 
-            this.GenderTextBox.Enabled = false;
-            this.GenderTextBox.Location = new System.Drawing.Point(473, 352);
-            this.GenderTextBox.Name = "GenderTextBox";
-            this.GenderTextBox.Size = new System.Drawing.Size(100, 20);
-            this.GenderTextBox.TabIndex = 26;
-            this.GenderTextBox.Visible = false;
+            GenderTextBox.Enabled = false;
+            GenderTextBox.Location = new System.Drawing.Point(448, 405);
+            GenderTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            GenderTextBox.Name = "GenderTextBox";
+            GenderTextBox.Size = new System.Drawing.Size(116, 23);
+            GenderTextBox.TabIndex = 26;
+            GenderTextBox.Visible = false;
+            // 
+            // picCaptcha
+            // 
+            picCaptcha.Location = new System.Drawing.Point(593, 70);
+            picCaptcha.Name = "picCaptcha";
+            picCaptcha.Size = new System.Drawing.Size(301, 139);
+            picCaptcha.TabIndex = 27;
+            picCaptcha.TabStop = false;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(635, 222);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(54, 15);
+            label1.TabIndex = 28;
+            label1.Text = "Captcha:";
+            // 
+            // captchaTextBox
+            // 
+            captchaTextBox.Location = new System.Drawing.Point(695, 222);
+            captchaTextBox.Name = "captchaTextBox";
+            captchaTextBox.Size = new System.Drawing.Size(100, 23);
+            captchaTextBox.TabIndex = 29;
+            // 
+            // regenerateCaptchaButton
+            // 
+            regenerateCaptchaButton.Location = new System.Drawing.Point(653, 266);
+            regenerateCaptchaButton.Name = "regenerateCaptchaButton";
+            regenerateCaptchaButton.Size = new System.Drawing.Size(127, 23);
+            regenerateCaptchaButton.TabIndex = 30;
+            regenerateCaptchaButton.Text = "Regenerate Captcha";
+            regenerateCaptchaButton.UseVisualStyleBackColor = true;
+            regenerateCaptchaButton.Click += RegenerateCaptchaButton_Click;
             // 
             // HomeForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.GenderTextBox);
-            this.Controls.Add(this.GenderPrompt);
-            this.Controls.Add(this.PronounSlash);
-            this.Controls.Add(this.PronounBox2);
-            this.Controls.Add(this.PronounBox1);
-            this.Controls.Add(this.PronounPrompt);
-            this.Controls.Add(this.GenderListBox);
-            this.Controls.Add(this.GenderListPrompt);
-            this.Controls.Add(this.CityBox);
-            this.Controls.Add(this.CityPrompt);
-            this.Controls.Add(this.LNamePrompt);
-            this.Controls.Add(this.FNamePrompt);
-            this.Controls.Add(this.LNameBox);
-            this.Controls.Add(this.FNameBox);
-            this.Controls.Add(this.EmailPrompt);
-            this.Controls.Add(this.EmailBox);
-            this.Controls.Add(this.RegPasswordPrompt);
-            this.Controls.Add(this.RegUsernamePrompt);
-            this.Controls.Add(this.RegPasswordBox);
-            this.Controls.Add(this.RegUsernameBox);
-            this.Controls.Add(this.LoginPasswordPrompt);
-            this.Controls.Add(this.LoginUsernamePrompt);
-            this.Controls.Add(this.loginBtn);
-            this.Controls.Add(this.PasswordBox);
-            this.Controls.Add(this.UsernameBox);
-            this.Controls.Add(this.regBtn);
-            this.Name = "HomeForm";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1Load);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(933, 519);
+            Controls.Add(regenerateCaptchaButton);
+            Controls.Add(captchaTextBox);
+            Controls.Add(label1);
+            Controls.Add(picCaptcha);
+            Controls.Add(GenderTextBox);
+            Controls.Add(GenderPrompt);
+            Controls.Add(PronounSlash);
+            Controls.Add(PronounBox2);
+            Controls.Add(PronounBox1);
+            Controls.Add(PronounPrompt);
+            Controls.Add(GenderListBox);
+            Controls.Add(GenderListPrompt);
+            Controls.Add(CityBox);
+            Controls.Add(CityPrompt);
+            Controls.Add(LNamePrompt);
+            Controls.Add(FNamePrompt);
+            Controls.Add(LNameBox);
+            Controls.Add(FNameBox);
+            Controls.Add(EmailPrompt);
+            Controls.Add(EmailBox);
+            Controls.Add(RegPasswordPrompt);
+            Controls.Add(RegUsernamePrompt);
+            Controls.Add(RegPasswordBox);
+            Controls.Add(RegUsernameBox);
+            Controls.Add(LoginPasswordPrompt);
+            Controls.Add(LoginUsernamePrompt);
+            Controls.Add(loginBtn);
+            Controls.Add(PasswordBox);
+            Controls.Add(UsernameBox);
+            Controls.Add(regBtn);
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            Name = "HomeForm";
+            Text = "Form1";
+            Load += Form1Load;
+            ((System.ComponentModel.ISupportInitialize)picCaptcha).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -355,6 +421,10 @@
         private System.Windows.Forms.Label PronounSlash;
         private System.Windows.Forms.Label GenderPrompt;
         private System.Windows.Forms.TextBox GenderTextBox;
+        private System.Windows.Forms.PictureBox picCaptcha;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox captchaTextBox;
+        private System.Windows.Forms.Button regenerateCaptchaButton;
     }
 }
 
