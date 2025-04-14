@@ -16,7 +16,7 @@ namespace GaemMoment
     public partial class MainForm : Form
     {
         private static MainForm instance = null;
-        private static readonly object padlock = new object();
+        private static readonly object padlock = new();
 
         protected readonly ReadOnlyDictionary<Tab, TabChangingControl> Tabs;
         public TabChangingControl CurrentlySelectedTab;
@@ -46,10 +46,7 @@ namespace GaemMoment
             {
                 lock (padlock)
                 {
-                    if (instance == null)
-                    {
-                        instance = new MainForm();
-                    }
+                    instance ??= new MainForm();
                     return instance;
                 }
             }
@@ -79,13 +76,13 @@ namespace GaemMoment
             CurrentlySelectedTab = Tabs[args.SelectedTab];
         }
 
-        protected void EnableTab(TabChangingControl tab)
+        protected static void EnableTab(TabChangingControl tab)
         {
             tab.Enabled = true;
             tab.Visible = true;
         }
 
-        protected void DisableTab(TabChangingControl tab)
+        protected static void DisableTab(TabChangingControl tab)
         {
             tab.Enabled = false;
             tab.Visible = false;

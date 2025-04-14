@@ -19,7 +19,7 @@ namespace GaemMoment
     public partial class HomeForm : Form
     {
         private static HomeForm instance = null;
-        private static readonly object padlock = new object();
+        private static readonly object padlock = new();
         private string CaptchaCode;
         public string emailCode;
         /// <summary>
@@ -43,10 +43,7 @@ namespace GaemMoment
             {
                 lock (padlock)
                 {
-                    if (instance == null)
-                    {
-                        instance = new HomeForm();
-                    }
+                    instance ??= new HomeForm();
                     return instance;
                 }
             }
@@ -91,7 +88,7 @@ namespace GaemMoment
                     pronoun2 = PronounBox2.Text;
                     break;
             }
-            DBConn.Instance.InsertNewUser(
+            DBConn.InsertNewUser(
                 RegUsernameBox.Text,
                 RegPasswordBox.Text,
                 EmailBox.Text,
@@ -112,7 +109,7 @@ namespace GaemMoment
         /// <param name="e">Event arguments.</param>
         private void LoginBtnClick(object sender, EventArgs e)
         {
-            DBConn.Instance.Login(UsernameBox.Text, PasswordBox.Text);
+            DBConn.Login(UsernameBox.Text, PasswordBox.Text);
         }
 
         /// <summary>
@@ -183,17 +180,17 @@ namespace GaemMoment
             GenderTextBox.Visible = state; GenderTextBox.Enabled = state;
         }
 
-        private Bitmap CaptchaToImage(string text, int width, int height)
+        private static Bitmap CaptchaToImage(string text, int width, int height)
         {
-            Bitmap bmp = new Bitmap(width, height);
+            Bitmap bmp = new(width, height);
             Graphics g = Graphics.FromImage(bmp);
-            SolidBrush sb = new SolidBrush(Color.White);
+            SolidBrush sb = new(Color.White);
             g.FillRectangle(sb, 0, 0, bmp.Width, bmp.Height);
-            Font font = new Font("Tahoma", 45);
+            Font font = new("Tahoma", 45);
             sb = new SolidBrush(Color.Black);
             g.DrawString(text, font, sb, bmp.Width / 2 - (text.Length / 2) * font.Size, (bmp.Height / 2) - font.Size);
             int count = 0;
-            Random rand = new Random();
+            Random rand = new();
             while (count < 1000)
             {
                 sb = new SolidBrush(Color.YellowGreen);
@@ -209,14 +206,14 @@ namespace GaemMoment
             return bmp;
         }
 
-        public string RandomString()
+        public static string RandomString()
         {
-            Random rnd = new Random();
+            Random rnd = new();
             int number = rnd.Next(10000, 99999);
             return MD5(number.ToString()).ToUpperInvariant()[..6];
         }
 
-        public string MD5(string input)
+        public static string MD5(string input)
         {
             byte[] hashedBytes = System.Security.Cryptography.MD5.HashData(UnicodeEncoding.Unicode.GetBytes(input));
             return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
@@ -227,7 +224,7 @@ namespace GaemMoment
             RegenerateCaptcha();
         }
 
-        public async Task SendMail(string email, string name, string message)
+        public static async Task SendMail(string email, string name, string message)
         {
 
             // Your SendGrid API Key you created above.
@@ -254,7 +251,7 @@ namespace GaemMoment
             var msg = MailHelper.CreateSingleEmail(senderEmail, recieverEmail, emailSubject, textContent, htmlContent);
 
             // send the email asyncronously
-            var resp = await client.SendEmailAsync(msg).ConfigureAwait(false);
+            await client.SendEmailAsync(msg).ConfigureAwait(false);
         }
     }
 }

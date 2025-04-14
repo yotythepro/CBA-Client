@@ -6,17 +6,10 @@ using System.Threading.Tasks;
 
 namespace GaemMoment
 {
-    public class Room
+    public class Room(string name, string roomCode, string creatorUserName)
     {
-        public string Name { get; }
-        public string RoomCode { get; }
-        public string CreatorUserName { get; }
-
-        public Room(string name, string roomCode, string creatorUserName)
-        {
-            Name = name;
-            RoomCode = roomCode;
-            CreatorUserName = creatorUserName;
-        }
+        public string Name { get; } = name;
+        public string RoomCode { get; } = roomCode;
+        public string CreatorUserName { get; } = creatorUserName;
     }
 }

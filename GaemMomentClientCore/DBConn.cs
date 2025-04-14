@@ -52,7 +52,7 @@ namespace GaemMoment
         /// <param name="pronoun1">First pronoun entered.</param>
         /// <param name="pronoun2">Second pronoun entered.</param>
         /// <param name="genderSpecified">Whether or not a gender was entered.</param>
-        public void InsertNewUser(string username, string password, string email, string firstName, string lastName, string city, string gender, string pronoun1, string pronoun2, bool genderSpecified)
+        public static void InsertNewUser(string username, string password, string email, string firstName, string lastName, string city, string gender, string pronoun1, string pronoun2, bool genderSpecified)
         {
             if(username.Length < 2)
             {
@@ -97,7 +97,7 @@ namespace GaemMoment
         /// </summary>
         /// <param name="username">Username entered.</param>
         /// <param name="password">Password entered.</param>
-        public void Login(String username, String password)
+        public static void Login(String username, String password)
         {
             ServerConn.Instance.SendMessage($"DL,{username},{password}");
         }
@@ -107,7 +107,7 @@ namespace GaemMoment
         /// </summary>
         /// <param name="password">Password entered.</param>
         /// <returns>True if <paramref name="password"/> is strong enough, false if not.</returns>
-        public bool ValidatePassword(string password)
+        public static bool ValidatePassword(string password)
         {
             if (!Regex.IsMatch(password, @"[a-z]"))
             {
@@ -133,7 +133,7 @@ namespace GaemMoment
         /// </summary>
         /// <param name="email">Email entered.</param>
         /// <returns>True if <paramref name="email"/> is valid, false if not.</returns>
-        public bool ValidateEmail(string email)
+        public static bool ValidateEmail(string email)
         {
             Regex emailRegex = new(@".{6,}@.+\..+");
             return emailRegex.IsMatch(email);
@@ -162,9 +162,9 @@ namespace GaemMoment
                 case "L":
                     if (parts[1] == "T")
                     {
-                        HomeForm.Instance.emailCode = HomeForm.Instance.RandomString();
-                        HomeForm.Instance.SendMail(parts[3], parts[2], $"Code is {HomeForm.Instance.emailCode}").Wait();
-                        InputBox inputBox = new InputBox("We Sencha a code via email, go input it:");
+                        HomeForm.Instance.emailCode = HomeForm.RandomString();
+                        HomeForm.SendMail(parts[3], parts[2], $"Code is {HomeForm.Instance.emailCode}").Wait();
+                        InputBox inputBox = new("We Sencha a code via email, go input it:");
 
                         if (inputBox.ShowDialog() == DialogResult.OK && inputBox.TextBox.Text == HomeForm.Instance.emailCode)
                         {
@@ -179,7 +179,7 @@ namespace GaemMoment
                         else
                         {
                             MessageBox.Show("Wrong Code");
-                            HomeForm.Instance.SendMail(parts[3], parts[2], $"Someone tried to log into your account but failed the email verification.\n" +
+                            HomeForm.SendMail(parts[3], parts[2], $"Someone tried to log into your account but failed the email verification.\n" +
                                 $"This could mean that you entered the code wrong, or that someone else has gained access to your password.\n" +
                                 $"Either way, skill issue.").Wait();
                         }

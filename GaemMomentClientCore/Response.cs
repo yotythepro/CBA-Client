@@ -8,20 +8,12 @@ using System.Windows.Forms;
 
 namespace GaemMoment
 {
-    internal class Response
+    internal class Response(RequestType type, bool success, List<Room> body, string errorMessage)
     {
-        public RequestType Type { get; set; }
-        public bool Success { get; set; }
-        public List<Room> Body { get; set; }
-        public string ErrorMessage { get; set; }
-
-        public Response(RequestType type, bool success, List<Room> body, string errorMessage)
-        {
-            Type = type;
-            Success = success;
-            Body = body;
-            ErrorMessage = errorMessage;
-        }
+        public RequestType Type { get; set; } = type;
+        public bool Success { get; set; } = success;
+        public List<Room> Body { get; set; } = body;
+        public string ErrorMessage { get; set; } = errorMessage;
 
         public void Handle()
         {

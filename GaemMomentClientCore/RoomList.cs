@@ -25,7 +25,7 @@ namespace GaemMoment
 
         private void CreateRoomButton_Click(object sender, EventArgs e)
         {
-            InputBox inputBox = new InputBox("Enter Room Name:");
+            InputBox inputBox = new("Enter Room Name:");
 
             if (inputBox.ShowDialog() == DialogResult.OK)
             {
@@ -46,7 +46,7 @@ namespace GaemMoment
 
         private void JoinPrivateRoomButton_Click(object sender, EventArgs e)
         {
-            InputBox inputBox = new InputBox("Enter Room ID:");
+            InputBox inputBox = new("Enter Room ID:");
 
             if (inputBox.ShowDialog() == DialogResult.OK)
             {
@@ -59,7 +59,7 @@ namespace GaemMoment
             RoomSelectionList.Items.Clear();
             foreach (Room room in newRoomList)
             {
-                RoomSelectionList.Items.Add(new ListViewItem(new string[] { room.CreatorUserName, room.Name }));
+                RoomSelectionList.Items.Add(new ListViewItem([room.CreatorUserName, room.Name]));
             }
             RoomHandler.UpdateRooms(newRoomList);
         }

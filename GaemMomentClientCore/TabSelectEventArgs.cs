@@ -6,15 +6,10 @@ using System.Threading.Tasks;
 
 namespace GaemMoment
 {
-    public class TabSelectEventArgs : EventArgs
+    public class TabSelectEventArgs(Tab selectedTab) : EventArgs
     {
-        public Tab SelectedTab;
+        public Tab SelectedTab = selectedTab;
         public Room SelectedRoom;
-
-        public TabSelectEventArgs(Tab selectedTab)
-        {
-            SelectedTab = selectedTab;
-        }
 
         public TabSelectEventArgs(Tab selectedTab, Room room) : this(selectedTab)
         {

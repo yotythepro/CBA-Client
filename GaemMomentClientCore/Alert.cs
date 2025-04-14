@@ -9,15 +9,15 @@ namespace GaemMoment
 {
     internal class Alert
     {
-        public AlertType type { get; set; }
-        public string playerUsername { get; set; }
+        public AlertType Type { get; set; }
+        public string PlayerUsername { get; set; }
 
         public void Handle()
         {
-            switch (type)
+            switch (Type)
             {
                 case AlertType.PLAYER_JOIN:
-                    MainForm.Instance.Invoke(new Action(() => MainForm.Instance.gameTab.UpdateOpponentName(playerUsername)));
+                    MainForm.Instance.Invoke(new Action(() => MainForm.Instance.gameTab.UpdateOpponentName(PlayerUsername)));
                     break;
                 default:
                     MessageBox.Show("Unrecognized Alert"); break;

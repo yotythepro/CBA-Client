@@ -37,14 +37,14 @@ namespace GaemMoment
             BoardGraphic.LoadPosition(Board);
         }
 
-        private string ToCoordinateNotation(Move move)
+        private static string ToCoordinateNotation(Move move)
         {
             return move.OriginalPosition.ToString() + move.NewPosition.ToString();
         }
 
-        private Move FromCoordinateNotation(string move)
+        private static Move FromCoordinateNotation(string move)
         {
-            return new Move(move.Substring(0, 2), move.Substring(2));
+            return new Move(move[..2], move[2..]);
         }
 
         public void RecieveMove(string moveText)
@@ -72,7 +72,7 @@ namespace GaemMoment
             }
             else
             {
-                MessageBox.Show($"Your opponent has attempted to perform the illegal move {moveText.Substring(0, 2)} to {moveText.Substring(2)}, if you are trying to play a modified version of the game," +
+                MessageBox.Show($"Your opponent has attempted to perform the illegal move {moveText[..2]} to {moveText[2..]}, if you are trying to play a modified version of the game," +
                     $" please make sure you both have the same modifications enabled.");
             }
         }

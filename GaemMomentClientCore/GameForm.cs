@@ -20,9 +20,9 @@ namespace GaemMoment
         const int baseX = 400;
         const int baseY = 300;
         const int playerNum = 2;
-        static readonly List<GameForm> PlayerForms = new List<GameForm>();
-        readonly List<List<double>> currState = new List<List<double>>();
-        readonly List<PictureBox> playerSprites = new List<PictureBox>();
+        static readonly List<GameForm> PlayerForms = [];
+        readonly List<List<double>> currState = [];
+        readonly List<PictureBox> playerSprites = [];
         readonly ServerConn serverConn;
         int walkDir = 0;
 
@@ -38,7 +38,7 @@ namespace GaemMoment
             this.KeyPreview = true;
             for (int i = 0; i < playerNum; i++)
             {
-                PictureBox sprite = new PictureBox
+                PictureBox sprite = new()
                 {
                     Size = new Size(playerSize, playerSize),
                     SizeMode = PictureBoxSizeMode.StretchImage,
@@ -118,7 +118,7 @@ namespace GaemMoment
             {
                 if (text[i] == '{')
                 {
-                    int parseRes = ParseGameState(text.Substring(i + 1));
+                    int parseRes = ParseGameState(text[(i + 1)..]);
                     i += parseRes + 1;
                     if (parseRes == -1)
                     {
@@ -148,7 +148,7 @@ namespace GaemMoment
                 }
                 if (text[i] == '{')
                 {
-                    int parseRes = ParsePlayerState(text.Substring(i + 1));
+                    int parseRes = ParsePlayerState(text[(i + 1)..]);
                     i += parseRes + 1;
                     if (parseRes == -1)
                     {
@@ -167,8 +167,8 @@ namespace GaemMoment
         private int ParsePlayerState(string text)
         {
             int i;
-            List<string> vals = new List<string>();
-            List<double> playerState = new List<double>();
+            List<string> vals = [];
+            List<double> playerState = [];
             string curr = "";
             bool endReached = false;
             for (i = 0; i < text.Length; i++)

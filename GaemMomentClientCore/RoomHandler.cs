@@ -10,7 +10,7 @@ namespace GaemMoment
 {
     internal static class RoomHandler
     {
-        private static readonly List<Room> _rooms = new List<Room>();
+        private static readonly List<Room> _rooms = [];
         public static List<Room> Rooms { get { return _rooms; } }
 
         public static void UpdateRooms(List<Room> newRoomList)

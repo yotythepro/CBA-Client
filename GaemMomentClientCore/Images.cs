@@ -14,8 +14,8 @@ namespace GaemMoment
     internal static class Images
     {
         public static Dictionary<SquareColor, Dictionary<PieceColor, Dictionary<ImageType, Image>>> Squares = [];
-        static PieceColor[] PIECE_COLORS = [PieceColor.White, PieceColor.Black];
-        static Assembly assembly = Assembly.GetExecutingAssembly();
+        static readonly PieceColor[] PIECE_COLORS = [PieceColor.White, PieceColor.Black];
+        static readonly Assembly assembly = Assembly.GetExecutingAssembly();
 
 
         public static void Load()
@@ -41,17 +41,13 @@ namespace GaemMoment
 
         public static string GetName(SquareColor squareColor)
         {
-            switch (squareColor)
+            return squareColor switch
             {
-                case SquareColor.LIGHT:
-                    return "Light";
-                case SquareColor.DARK:
-                    return "Dark";
-                case SquareColor.HIGHLIGHT:
-                    return "Highlight";
-                default:
-                    return null;
-            }
+                SquareColor.LIGHT => "Light",
+                SquareColor.DARK => "Dark",
+                SquareColor.HIGHLIGHT => "Highlight",
+                _ => null,
+            };
         }
 
         public static string GetName(SquareColor squareColor, PieceColor pieceColor, ImageType type) 

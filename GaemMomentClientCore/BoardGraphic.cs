@@ -12,9 +12,9 @@ namespace GaemMoment
     internal static class BoardGraphic
     {
         public const int BOARD_SIZE = 8;
-        static PictureBox[,] board = new PictureBox[BOARD_SIZE, BOARD_SIZE];
+        static readonly PictureBox[,] board = new PictureBox[BOARD_SIZE, BOARD_SIZE];
         
-        static Dictionary<PieceType, ImageType> PIECE_IMAGES = new()
+        static readonly Dictionary<PieceType, ImageType> PIECE_IMAGES = new()
         {
             {PieceType.Rook, ImageType.Rook},
             {PieceType.King, ImageType.King},
@@ -74,7 +74,7 @@ namespace GaemMoment
             {
                 for (short j = 0; j < BOARD_SIZE; j++)
                 {
-                    Position pos = new Position(j, i);
+                    Position pos = new(j, i);
                     if (!IsSamePiece(loadedBoard[pos], Square.GetSquare(pos).piece) || Square.GetSquare(pos).ColorChangeNeeded) {
                         Square.GetSquare(pos).piece = loadedBoard[pos];
                         if (loadedBoard[pos] == null)

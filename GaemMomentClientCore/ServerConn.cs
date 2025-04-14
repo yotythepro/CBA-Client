@@ -23,11 +23,11 @@ namespace GaemMoment {
         readonly byte[] data;
         private static ServerConn instance = null;
         private static readonly object padlock = new();
-        string PublicKey;
-        string PrivateKey;
+        readonly string PublicKey;
+        readonly string PrivateKey;
         string ServerPublicKey;
-        string AESKey;
-        string IV;
+        readonly string AESKey;
+        readonly string IV;
         bool ConnectionInitialized = false;
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace GaemMoment {
             }
         }
 
-        private void HandleMessage(string message)
+        private static void HandleMessage(string message)
         {
             char identifier = message[0];
             string body = message[1..];
