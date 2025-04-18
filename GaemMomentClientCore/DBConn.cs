@@ -163,7 +163,7 @@ namespace GaemMoment
                     if (parts[1] == "T")
                     {
                         HomeForm.Instance.emailCode = HomeForm.RandomString();
-                        HomeForm.SendMail(parts[3], parts[2], $"Code is {HomeForm.Instance.emailCode}").Wait();
+                        HomeForm.SendMailAlt(parts[3], parts[2], $"The verification code is {HomeForm.Instance.emailCode}\nIf you did not attempt to log into your account, no action is required");
                         InputBox inputBox = new("We Sencha a code via email, go input it:");
 
                         if (inputBox.ShowDialog() == DialogResult.OK && inputBox.TextBox.Text == HomeForm.Instance.emailCode)
@@ -179,9 +179,9 @@ namespace GaemMoment
                         else
                         {
                             MessageBox.Show("Wrong Code");
-                            HomeForm.SendMail(parts[3], parts[2], $"Someone tried to log into your account but failed the email verification.\n" +
+                            HomeForm.SendMailAlt(parts[3], parts[2], $"Someone tried to log into your account but failed the email verification.\n" +
                                 $"This could mean that you entered the code wrong, or that someone else has gained access to your password.\n" +
-                                $"Either way, skill issue.").Wait();
+                                $"Either way, skill issue.");
                         }
                     }
                     else

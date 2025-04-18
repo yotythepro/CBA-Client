@@ -10,6 +10,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using System.Xml.Linq;
+using System.Net.Mail;
+using System.Net;
+
 
 namespace GaemMoment
 {
@@ -234,13 +239,13 @@ namespace GaemMoment
             var client = new SendGridClient(apiKey);
 
             // Use the From Email as the Email you verified above
-            var senderEmail = new EmailAddress("chessbattleawesome@gmail.com", "Garry Chess, Inventor of Chess");
+            var senderEmail = new EmailAddress("chessbattleawesome@cba.publicvm.com", "Garry Chess, Inventor of Chess");
 
             // The recipient of the email
             var recieverEmail = new EmailAddress(email, name);
 
             // Define the Email Subject
-            string emailSubject = "Hello World! This is my Subject (no I will not bother changing this";
+            string emailSubject = "Verification Code";
 
             string textContent = message;
 
@@ -251,7 +256,38 @@ namespace GaemMoment
             var msg = MailHelper.CreateSingleEmail(senderEmail, recieverEmail, emailSubject, textContent, htmlContent);
 
             // send the email asyncronously
-            await client.SendEmailAsync(msg).ConfigureAwait(false);
+            var status = await client.SendEmailAsync(msg).ConfigureAwait(false);
+            MessageBox.Show(status.StatusCode.ToString());
+        }
+
+        public static void SendMailAlt(string emailAddress, string name, string message)
+        {
+
+            MailAddress to = new MailAddress(emailAddress, name);
+            MailAddress from = new MailAddress("chessbattleawesome@gmail.com", "Garry Chess, Inventor of Chess");
+
+            MailMessage email = new MailMessage(from, to);
+            email.Subject = "Verifcation Alert";
+            email.Body = message;
+
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp-relay.brevo.com";
+            smtp.Port = 587;
+            smtp.Credentials = new NetworkCredential("8ad344001@smtp-brevo.com", "ktQWpfBsjSC3PDra");
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.EnableSsl = true;
+
+            try
+            {
+                /* Send method called below is what will send off our email 
+                 * unless an exception is thrown.
+                 */
+                smtp.Send(email);
+            }
+            catch (SmtpException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }
