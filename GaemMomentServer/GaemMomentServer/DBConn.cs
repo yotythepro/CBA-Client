@@ -93,7 +93,7 @@ namespace GaemMomentServer
                     }
                 case "L":
                     string name = Exists(parts[1], parts[2]);
-                    if (name.Length == 0)
+                    if (name.Length <= 1)
                         return "{L,F}";
                     else
                     {

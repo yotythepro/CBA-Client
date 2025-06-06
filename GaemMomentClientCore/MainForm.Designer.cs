@@ -38,7 +38,7 @@
             mainMenu.Location = new System.Drawing.Point(214, 217);
             mainMenu.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             mainMenu.Name = "mainMenu";
-            mainMenu.Size = new System.Drawing.Size(175, 173);
+            mainMenu.Size = new System.Drawing.Size(175, 200);
             mainMenu.TabIndex = 0;
             // 
             // roomList

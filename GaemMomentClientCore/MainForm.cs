@@ -20,7 +20,7 @@ namespace GaemMoment
 
         protected readonly ReadOnlyDictionary<Tab, TabChangingControl> Tabs;
         public TabChangingControl CurrentlySelectedTab;
-        private bool BoardLoaded = false;
+        public bool BoardLoaded = false;
         private MainForm()
         {
             InitializeComponent();
@@ -55,7 +55,7 @@ namespace GaemMoment
         protected void ChangeTab(object sender, EventArgs e)
         {
             TabSelectEventArgs args = (TabSelectEventArgs)e;
-            if (args.SelectedTab == Tab.GAME)
+            if (args.SelectedTab == Tab.GAME && !gameTab.isReplay)
             {
                 if (!BoardLoaded)
                 {

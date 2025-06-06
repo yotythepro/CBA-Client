@@ -8,13 +8,13 @@ namespace GaemMomentServer
 {
     internal class Alert
     {
-        public AlertType type { get; set; }
-        public string playerUsername { get; set; }
+        public AlertType Type { get; set; }
+        public string PlayerUsername { get; set; }
 
         public Alert(AlertType type, string playerUsername)
         {
-            this.type = type;
-            this.playerUsername = playerUsername;
+            this.Type = type;
+            this.PlayerUsername = playerUsername;
         }
     }
 }
